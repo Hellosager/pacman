@@ -1,0 +1,50 @@
+package Pacman.game;
+
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+
+import Pacman.gfx.Assets;
+
+public class GameInformationPanel extends JPanel{
+	private JLabel[] lifes; 
+	private JLabel score;
+
+	public GameInformationPanel(){
+		this.setLayout(new GridLayout(1, 2));
+		this.setBackground(Color.DARK_GRAY);
+		this.setBorder(new LineBorder(Color.BLACK, 3));
+
+		JPanel leftPanel = new JPanel(new GridLayout(1,3));
+		leftPanel.setOpaque(false);
+		// LeftPanel mit lifes initalisieren
+		lifes = new JLabel[3];
+		for(int i = 0; i < lifes.length; i++){
+			lifes[i] = new JLabel(new ImageIcon(Assets.pacman));
+			leftPanel.add(lifes[i]);
+		}
+
+		// Rightpanel initalisieren
+		JPanel rightPanel = new JPanel();
+		rightPanel.setOpaque(false);
+		score = new JLabel("Score:          " + 99999);		//10 Whitespaces
+		score.setForeground(Color.ORANGE);
+		rightPanel.add(score);
+		
+		
+		this.add(leftPanel);
+		this.add(rightPanel);
+	}
+	
+	public JLabel[] getLifes(){
+		return lifes;
+	}
+	
+	public JLabel getScore(){
+		return score;
+	}
+}

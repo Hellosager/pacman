@@ -1,0 +1,13 @@
+#Java class files
+*.class
+
+#generated files
+bin/
+
+#Eclipse project files
+.classpath
+.project
+.settings
+
+Level/
+src/To Do List
