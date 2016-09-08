@@ -63,7 +63,7 @@ public class Game implements Runnable{
 		canvas.setMaximumSize(dim);
 		canvas.setMinimumSize(dim);
 //		canvas.setFocusable(false);
-		canvas.addKeyListener(new Steuerung(level.getCreatures()[0]));
+		canvas.addKeyListener(new Steuerung(level.getPlayer()));
 
 		
 		display.getFrame().add(gi, BorderLayout.NORTH);
@@ -90,8 +90,7 @@ public class Game implements Runnable{
 	}
 	
 	public void tick(){
-		for(Creature c : level.getCreatures())
-			c.tick();
+		level.tick();
 	}
 	
 	public void render(){

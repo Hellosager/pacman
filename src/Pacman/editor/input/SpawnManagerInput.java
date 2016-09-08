@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 import Pacman.creatures.Creature;
+import Pacman.creatures.Player;
 import Pacman.editor.Editor;
 import Pacman.editor.SpawnManager;
 
@@ -24,12 +25,31 @@ public class SpawnManagerInput implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		Creature[] creatures = editor.getEditMap().getCreatures();
+		Player player = editor.getEditMap().getPlayer();
+		
+		try{
+			int x = new Integer(sm.getPlayerX().getText());
+			int y = new Integer(sm.getPlayerY().getText());
+			
+			if(editor.getEditMap().getTileMap()[x][y] == 0 || editor.getEditMap().isSpawn(x, y, player)){
+				player.setSpawnX(0);
+				player.setSpawnY(0);
+			}else{
+				editor.setSaved(false);
+				player.setSpawnX(x);
+				player.setSpawnY(y);
+			}
+		}catch(NumberFormatException exception){
+			player.setSpawnX(0);
+			player.setSpawnY(0);
+		}
+		
 		for(int i = 0; i < creatures.length; i++){
 			try{
 				int x = new Integer(sm.getTextfields()[i][0].getText());
 				int y = new Integer(sm.getTextfields()[i][1].getText());
 
-				if(editor.getEditMap().getTileMap()[x][y] == 0){
+				if(editor.getEditMap().getTileMap()[x][y] == 0 || editor.getEditMap().isSpawn(x, y, creatures[i])){
 					creatures[i].setSpawnX(0);
 					creatures[i].setSpawnY(0);
 				}else{
@@ -38,10 +58,7 @@ public class SpawnManagerInput implements ActionListener{
 					creatures[i].setSpawnY(y);
 				}
 			}
-			catch(NumberFormatException nfe){
-				creatures[i].setSpawnX(0);
-				creatures[i].setSpawnY(0);
-			}catch(ArrayIndexOutOfBoundsException aioobe){
+			catch(NumberFormatException exception){
 				creatures[i].setSpawnX(0);
 				creatures[i].setSpawnY(0);
 			}

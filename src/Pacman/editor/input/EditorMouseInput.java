@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import Pacman.creatures.Creature;
+import Pacman.creatures.Player;
 import Pacman.editor.Editor;
 import Pacman.gui.Display;
 import Pacman.tiles.Tile;
@@ -103,9 +104,11 @@ public class EditorMouseInput implements MouseListener, MouseMotionListener{
 	
 	private boolean isNoSpawn(){
 		Creature[] creatures = editor.getEditMap().getCreatures();
+		Player player = editor.getEditMap().getPlayer();
+		if((player.getSpawnX() == tileX/Tile.TILEWIDTH) && (player.getSpawnY() == tileY/Tile.TILEHEIGHT))
+			return false;
 		for(int i = 0; i < creatures.length; i++){
 			if((creatures[i].getSpawnX() == tileX/Tile.TILEWIDTH) && (creatures[i].getSpawnY() == tileY/Tile.TILEHEIGHT)){
-				System.out.println("DOCH SPAWN");
 				return false;
 			}
 		}

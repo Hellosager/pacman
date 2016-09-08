@@ -18,12 +18,13 @@ import Pacman.gfx.Assets;
 public class SpawnManager {
 	
 	
-	private JLabel[] pics = {	new JLabel(new ImageIcon(Assets.pacman)),
+	private JLabel[] pics = {
 								new JLabel(new ImageIcon(Assets.blinky)),
 								new JLabel(new ImageIcon(Assets.pinky)),
 								new JLabel(new ImageIcon(Assets.inky))};
 	
 	private JTextField[][] textfields = new JTextField[4][2];
+	private JTextField playerX, playerY;
 
 	public SpawnManager(JFrame mainframe, Editor editor) {
 		JFrame f = new JFrame();
@@ -39,26 +40,48 @@ public class SpawnManager {
 		spawns.add(new JLabel());
 		spawns.add(new JLabel("       X"));
 		spawns.add(new JLabel("       Y"));
+		
+		// TODO refactor dat shit
+		spawns.add(new JLabel(new ImageIcon(Assets.pacman)));
+		playerX = new JTextField();
 
+		playerX.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {}
+			public void focusGained(FocusEvent e) {
+				playerX.selectAll();
+			}
+		});
+		playerY = new JTextField();
+		playerY.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {}
+			public void focusGained(FocusEvent e) {
+				playerY.selectAll();
+			}
+		});
+		
+		playerX.setText(editor.getEditMap().getPlayer().getSpawnX() + "");
+		playerY.setText(editor.getEditMap().getPlayer().getSpawnY() + "");
+		spawns.add(playerX);
+		spawns.add(playerY);
 		
 		for(int i = 0; i < pics.length; i++){	//Bilder
 			spawns.add(pics[i]);
 			for(int k = 0; k < textfields[i].length; k++){
-			JTextField tf = new JTextField();
-			textfields[i][k] = tf;
-			textfields[i][k].addFocusListener(new FocusListener() {
-				public void focusLost(FocusEvent e) {}				
-				public void focusGained(FocusEvent e) {
-					tf.selectAll();
+				JTextField tf = new JTextField();
+				textfields[i][k] = tf;
+				textfields[i][k].addFocusListener(new FocusListener() {
+					public void focusLost(FocusEvent e) {}				
+					public void focusGained(FocusEvent e) {
+						tf.selectAll();
+					}
+				});
+	
+				switch(k){
+				case 0: textfields[i][k].setText(editor.getEditMap().getCreatures()[i].getSpawnX() + ""); break;
+				case 1: textfields[i][k].setText(editor.getEditMap().getCreatures()[i].getSpawnY() + ""); break;
 				}
-			});
-
-			switch(k){
-			case 0: textfields[i][k].setText(editor.getEditMap().getCreatures()[i].getSpawnX() + ""); break;
-			case 1: textfields[i][k].setText(editor.getEditMap().getCreatures()[i].getSpawnY() + ""); break;
-			}
-			spawns.add(textfields[i][k]);	
-			}
+				spawns.add(textfields[i][k]);	
+				}
 		}
 
 		spawns.add(new JLabel());
@@ -74,6 +97,14 @@ public class SpawnManager {
 	
 	public JTextField[][] getTextfields(){
 		return textfields;
+	}
+	
+	public JTextField getPlayerX(){
+		return playerX;
+	}
+	
+	public JTextField getPlayerY(){
+		return playerY;
 	}
 	
 }

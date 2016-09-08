@@ -4,11 +4,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import Pacman.creatures.Creature;
+import Pacman.creatures.Player;
 
 public class Steuerung implements KeyListener{
-	private Creature player;
+	private Player player;
 	
-	public Steuerung(Creature player) {
+	public Steuerung(Player player) {
 		this.player = player;
 	}
 
