@@ -66,6 +66,7 @@ public class Editor implements Runnable{
 		display.getFrame().getContentPane().removeAll();
 		display.getFrame().getContentPane().setBackground(null);
 		display.getFrame().setLayout(new BorderLayout());
+		display.getFrame().setLocation(display.getFrame().getX(), display.getFrame().getY()-30);
 		
 		
 		tools = new JPanel();

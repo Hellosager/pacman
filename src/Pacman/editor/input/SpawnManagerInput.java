@@ -42,6 +42,9 @@ public class SpawnManagerInput implements ActionListener{
 		}catch(NumberFormatException exception){
 			player.setSpawnX(0);
 			player.setSpawnY(0);
+		}catch(ArrayIndexOutOfBoundsException aioobe){
+			player.setSpawnX(0);
+			player.setSpawnY(0);
 		}
 		
 		for(int i = 0; i < creatures.length; i++){
@@ -58,7 +61,10 @@ public class SpawnManagerInput implements ActionListener{
 					creatures[i].setSpawnY(y);
 				}
 			}
-			catch(NumberFormatException exception){
+			catch(NumberFormatException nfe){
+				creatures[i].setSpawnX(0);
+				creatures[i].setSpawnY(0);
+			}catch(ArrayIndexOutOfBoundsException aioobe){
 				creatures[i].setSpawnX(0);
 				creatures[i].setSpawnY(0);
 			}

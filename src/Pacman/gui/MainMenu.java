@@ -26,6 +26,7 @@ public class MainMenu {
 		display.getFrame().getContentPane().setLayout(null);
 		display.getFrame().setSize(display.getWidth(), display.getHeight());
 		display.getFrame().getContentPane().setBackground(Color.BLACK);
+		display.getFrame().setLocationRelativeTo(null);
 		initButtons();
 	}
 	
