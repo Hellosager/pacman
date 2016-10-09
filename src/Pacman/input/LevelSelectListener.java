@@ -4,10 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.swing.ImageIcon;
-
 import Pacman.game.Game;
-import Pacman.gfx.ImageLoader;
 import Pacman.gui.Levelselect;
 import Pacman.gui.MainMenu;
 import Pacman.level.Level;

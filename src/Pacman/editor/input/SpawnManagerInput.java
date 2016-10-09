@@ -3,6 +3,7 @@ package Pacman.editor.input;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Pacman.creatures.Creature;
@@ -12,13 +13,14 @@ import Pacman.editor.SpawnManager;
 
 public class SpawnManagerInput implements ActionListener{
 	private SpawnManager sm;
-	private JFrame mainframe, spawnFrame;
+	private JFrame mainframe;
+	private JDialog spawnFrame;
 	private Editor editor;
 	
 	
-	public SpawnManagerInput(SpawnManager sm, JFrame mainframe, JFrame spawnFrame, Editor editor) {
+	public SpawnManagerInput(SpawnManager sm, JFrame mainframe, JDialog spawnFrame, Editor editor) {
 		this.sm = sm;
-		this.mainframe = mainframe;
+		this.mainframe = mainframe;	
 		this.spawnFrame = spawnFrame;
 		this.editor = editor;
 	}

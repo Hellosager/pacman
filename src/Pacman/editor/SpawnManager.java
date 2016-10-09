@@ -7,6 +7,7 @@ import java.awt.event.FocusListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,12 +28,13 @@ public class SpawnManager {
 	private JTextField playerX, playerY;
 
 	public SpawnManager(JFrame mainframe, Editor editor) {
-		JFrame f = new JFrame();
-		f.setResizable(false);
-		f.setLocationRelativeTo(mainframe);
-		f.setLayout(new FlowLayout());	// 4 reihen, 2 spalten
-		f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		f.setVisible(true);
+		JDialog spawnDialog = new JDialog(mainframe);
+//		JFrame f = new JFrame();
+		spawnDialog.setResizable(false);
+		spawnDialog.setLocationRelativeTo(mainframe);
+		spawnDialog.setLayout(new FlowLayout());	// 4 reihen, 2 spalten
+		spawnDialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		spawnDialog.setVisible(true);
 		
 		JPanel spawns = new JPanel();
 		spawns.setLayout(new GridLayout(6,3,5,2));	//6 reihen, 3 Spalten, 5 nach unten, 2 nach rechts
@@ -86,13 +88,13 @@ public class SpawnManager {
 
 		spawns.add(new JLabel());
 		JButton b = new JButton("Set");
-		b.addActionListener(new SpawnManagerInput(this, mainframe, f, editor));
+		b.addActionListener(new SpawnManagerInput(this, mainframe, spawnDialog, editor));
 		spawns.add(b);
 		spawns.add(new JLabel());
 
 		
-		f.add(spawns);
-		f.pack();
+		spawnDialog.add(spawns);
+		spawnDialog.pack();
 	}
 	
 	public JTextField[][] getTextfields(){
