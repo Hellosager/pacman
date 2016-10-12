@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 
 import Pacman.creatures.Creature;
 import Pacman.creatures.Player;
+import Pacman.gfx.Assets;
 
 public class Steuerung implements KeyListener{
 	private Player player;
@@ -17,19 +18,19 @@ public class Steuerung implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_W){
 			player.setNewDirectionSet(true);
-			player.setNewDirection(0);
+			player.setNewDirection(Creature.UP);
 		}
 		if(e.getKeyCode() == KeyEvent.VK_D){
 			player.setNewDirectionSet(true);
-			player.setNewDirection(1);
+			player.setNewDirection(Creature.RIGHT);
 		}
 		if(e.getKeyCode() == KeyEvent.VK_S){
 			player.setNewDirectionSet(true);
-			player.setNewDirection(2);
+			player.setNewDirection(Creature.DOWN);
 		}
 		if(e.getKeyCode() == KeyEvent.VK_A){
 			player.setNewDirectionSet(true);
-			player.setNewDirection(3);
+			player.setNewDirection(Creature.LEFT);
 		}	
 	}
 

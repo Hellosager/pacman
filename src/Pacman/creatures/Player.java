@@ -3,10 +3,15 @@ package Pacman.creatures;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import Pacman.gfx.Assets;
 import Pacman.level.Level;
 import Pacman.tiles.Tile;
 
 public class Player extends Creature{
+	private final static int maxTickCount = 2;
+	
+	private int state = 0;
+	private int tickCount = 0;
 
 	public Player(BufferedImage texture, Level level) {
 		super(texture, level);
@@ -20,23 +25,37 @@ public class Player extends Creature{
 			newDirectionSet = false;
 			direction = newDirection;
 		}
+		
+		texture = Assets.pacmanDircetions[direction][Math.abs(state)];
+		
+		// kann mi Math.abs geregelt werden siehe eins oben, state soll nur alle paar frames geregelt werden 
+		if(tickCount == maxTickCount){
+			if(state < Assets.pacmanDircetions[direction].length-1)
+				state++;
+			else
+				state = -(Assets.pacmanDircetions[direction].length-1);
+		tickCount = 0;
+		}else{
+			tickCount++;
+		}
+		
 		switch(direction){
-		case 0:	// nach oben
+		case UP:	// nach oben
 			if(level.getTileMap()[renderX/Tile.TILEWIDTH][(renderY-speed)/Tile.TILEHEIGHT] != 0 ){	// wenn der drüber keine Wall
 				renderY -= speed;
 			}
 			break;
-		case 1:	// nach rechts
+		case RIGHT:	// nach rechts
 			if(level.getTileMap()[(renderX/Tile.TILEWIDTH)+1][renderY/Tile.TILEHEIGHT] != 0){
 				renderX += speed;
 			}
 			break;
-		case 2:	// nach unten
+		case DOWN:	// nach unten
 			if(level.getTileMap()[renderX/Tile.TILEWIDTH][renderY/Tile.TILEHEIGHT+1] != 0){
 				renderY += speed;
 			}
 			break;
-		case 3:	// nach links
+		case LEFT:	// nach links
 			if(level.getTileMap()[(renderX-speed)/Tile.TILEWIDTH][renderY/Tile.TILEHEIGHT] != 0){
 				renderX -= speed;
 			}

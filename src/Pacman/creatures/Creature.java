@@ -7,6 +7,10 @@ import Pacman.level.Level;
 import Pacman.tiles.Tile;
 
 public abstract class Creature {
+	public static final int UP = 0;
+	public static final int RIGHT = 1;
+	public static final int DOWN = 2;
+	public static final int LEFT = 3;
 	
 	protected BufferedImage texture;
 	protected int renderX, renderY;
@@ -71,5 +75,9 @@ public abstract class Creature {
 	
 	public void setNewDirectionSet(boolean b){
 		newDirectionSet = b;
+	}
+	
+	public void setTexture(BufferedImage newTexture){
+		this.texture = newTexture;
 	}
 }

@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import Pacman.creatures.Creature;
 import Pacman.gfx.Assets;
 
 public class GameInformationPanel extends JPanel{
@@ -24,7 +25,7 @@ public class GameInformationPanel extends JPanel{
 		// LeftPanel mit lifes initalisieren
 		lifes = new JLabel[3];
 		for(int i = 0; i < lifes.length; i++){
-			lifes[i] = new JLabel(new ImageIcon(Assets.pacman));
+			lifes[i] = new JLabel(new ImageIcon(Assets.pacmanDircetions[Creature.RIGHT][0]));
 			leftPanel.add(lifes[i]);
 		}
 

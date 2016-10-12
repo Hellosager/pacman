@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Pacman.creatures.Creature;
 import Pacman.editor.input.SpawnManagerInput;
 import Pacman.gfx.Assets;
 
@@ -29,11 +30,9 @@ public class SpawnManager {
 
 	public SpawnManager(JFrame mainframe, Editor editor) {
 		JDialog spawnDialog = new JDialog(mainframe);
-//		JFrame f = new JFrame();
 		spawnDialog.setResizable(false);
 		spawnDialog.setLocationRelativeTo(mainframe);
 		spawnDialog.setLayout(new FlowLayout());	// 4 reihen, 2 spalten
-		spawnDialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		spawnDialog.setVisible(true);
 		
 		JPanel spawns = new JPanel();
@@ -44,7 +43,7 @@ public class SpawnManager {
 		spawns.add(new JLabel("       Y"));
 		
 		// TODO refactor dat shit
-		spawns.add(new JLabel(new ImageIcon(Assets.pacman)));
+		spawns.add(new JLabel(new ImageIcon(Assets.pacmanDircetions[Creature.RIGHT][0])));
 		playerX = new JTextField();
 
 		playerX.addFocusListener(new FocusListener() {
