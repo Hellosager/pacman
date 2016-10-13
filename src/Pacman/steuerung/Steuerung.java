@@ -5,33 +5,38 @@ import java.awt.event.KeyListener;
 
 import Pacman.creatures.Creature;
 import Pacman.creatures.Player;
-import Pacman.gfx.Assets;
+import Pacman.game.Game;
 
 public class Steuerung implements KeyListener{
 	private Player player;
+	private Game game;
 	
-	public Steuerung(Player player) {
+	public Steuerung(Player player, Game game) {
 		this.player = player;
+		this.game = game;
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_W){
+		if(e.getKeyCode() == KeyEvent.VK_W && !game.isPaused()){
 			player.setNewDirectionSet(true);
 			player.setNewDirection(Creature.UP);
 		}
-		if(e.getKeyCode() == KeyEvent.VK_D){
+		if(e.getKeyCode() == KeyEvent.VK_D && !game.isPaused()){
 			player.setNewDirectionSet(true);
 			player.setNewDirection(Creature.RIGHT);
 		}
-		if(e.getKeyCode() == KeyEvent.VK_S){
+		if(e.getKeyCode() == KeyEvent.VK_S && !game.isPaused()){
 			player.setNewDirectionSet(true);
 			player.setNewDirection(Creature.DOWN);
 		}
-		if(e.getKeyCode() == KeyEvent.VK_A){
+		if(e.getKeyCode() == KeyEvent.VK_A && !game.isPaused()){
 			player.setNewDirectionSet(true);
 			player.setNewDirection(Creature.LEFT);
-		}	
+		}
+		if(e.getKeyCode() == KeyEvent.VK_P){
+			game.setPaused(game.isPaused() ? false : true);
+		}
 	}
 
 	@Override

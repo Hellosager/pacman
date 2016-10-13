@@ -13,6 +13,7 @@ import Pacman.steuerung.Steuerung;
 
 public class Game implements Runnable{
 	private boolean running = false;
+	private boolean paused = false;
 	private int width, height;
 	
 	private Display display;
@@ -35,10 +36,11 @@ public class Game implements Runnable{
 
 		
 		while(running){
-			tick();
-			render();
-			
-			try {Thread.sleep(50);}catch(InterruptedException e){}
+			if(!paused){
+				tick();
+				render();
+			}
+			try {Thread.sleep(50);}catch(InterruptedException e){}				
 		}
 	}
 	
@@ -63,7 +65,7 @@ public class Game implements Runnable{
 		canvas.setMaximumSize(dim);
 		canvas.setMinimumSize(dim);
 //		canvas.setFocusable(false);
-		canvas.addKeyListener(new Steuerung(level.getPlayer()));
+		canvas.addKeyListener(new Steuerung(level.getPlayer(), this));
 
 		
 		display.getFrame().add(gi, BorderLayout.NORTH);
@@ -116,4 +118,11 @@ public class Game implements Runnable{
 		this.level = level;
 	}
 	
+	public void setPaused(boolean paused){
+		this.paused = paused;
+	}
+	
+	public boolean isPaused(){
+		return paused;
+	}
 }

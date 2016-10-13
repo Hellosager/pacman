@@ -28,10 +28,10 @@ public class Display {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Assets.initAssets();
 		frame.setVisible(true);
 		
 		
-		Assets.initAssets();
 		new MainMenu(this);
 
 	}
