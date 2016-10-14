@@ -48,11 +48,11 @@ public abstract class Creature {
 	}
 
 	public int getRenderX(){
-		return renderX*Tile.TILEWIDTH;
+		return renderX;
 	}
 	
 	public int getRenderY(){
-		return renderY*Tile.TILEHEIGHT;
+		return renderY;
 	}
 	
 	public int getSpawnX(){

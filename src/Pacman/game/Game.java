@@ -6,10 +6,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-import Pacman.creatures.Creature;
+import Pacman.creatures.Player;
 import Pacman.gui.Display;
 import Pacman.level.Level;
 import Pacman.steuerung.Steuerung;
+import Pacman.tiles.Tile;
 
 public class Game implements Runnable{
 	private boolean running = false;
@@ -22,6 +23,7 @@ public class Game implements Runnable{
 	private Graphics g;
 	private Level level;
 	private GameInformationPanel gi;
+	private Player player;
 	private int score, lifeCount;	// score und anzahl der verbleibenden leben
 
 	public Game(Display display) {
@@ -48,6 +50,7 @@ public class Game implements Runnable{
 	private void init(){
 		score = 0;
 		lifeCount = 3;
+		player = level.getPlayer();
 		
 		width = display.getWidth();
 		height = display.getHeight();	
@@ -93,6 +96,14 @@ public class Game implements Runnable{
 	
 	public void tick(){
 		level.tick();
+		int x = (player.getRenderX()-Tile.TILEWIDTH / 2) / Tile.TILEWIDTH + 1;
+		int y = (player.getRenderY()-Tile.TILEHEIGHT / 2) / Tile.TILEHEIGHT + 1;
+		int[][] tileMap = level.getTileMap();
+		if(tileMap[x][y] == 1){
+			tileMap[x][y] = 2;
+			score++;
+			gi.getScore().setText("Score:          " + score);
+		}
 	}
 	
 	public void render(){

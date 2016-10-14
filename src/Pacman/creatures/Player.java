@@ -8,7 +8,7 @@ import Pacman.level.Level;
 import Pacman.tiles.Tile;
 
 public class Player extends Creature{
-	private final static int maxTickCount = 2;
+	private final static int maxTickCount = 1;
 	
 	private int state = 0;
 	private int tickCount = 0;

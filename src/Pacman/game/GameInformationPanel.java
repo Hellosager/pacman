@@ -32,7 +32,7 @@ public class GameInformationPanel extends JPanel{
 		// Rightpanel initalisieren
 		JPanel rightPanel = new JPanel();
 		rightPanel.setOpaque(false);
-		score = new JLabel("Score:          " + 99999);		//10 Whitespaces
+		score = new JLabel("Score:          ");		//10 Whitespaces
 		score.setForeground(Color.ORANGE);
 		rightPanel.add(score);
 		
