@@ -20,6 +20,8 @@ public abstract class Creature {
 	protected int newDirection;
 	protected Level level;
 	protected boolean newDirectionSet = false;
+	protected int maxTickCount;
+	protected int tickCount = 0;
 	
 	public Creature(BufferedImage texture, Level level){
 		this.texture = texture;
@@ -30,8 +32,7 @@ public abstract class Creature {
 		g.drawImage(texture, renderX, renderY, null);
 	}
 	
-	public void tick(){
-	}
+	public abstract void tick();
 	
 	/*
 	 * this.x = x*Tile.Tilewidht: führt dazu, dass pacman sich bewegt

@@ -8,7 +8,7 @@ public class Assets {
 
 	public static BufferedImage play, playOutline, score, scoreOutline, title, editor, editorOutline;
 	public static BufferedImage wall, fullWay, emptyWay, raster;
-	public static BufferedImage inky, blinky, pinky, pacman;
+	public static BufferedImage[] inky, blinky, pinky;
 	public static BufferedImage[][] pacmanDircetions;
 	
 	public static void initAssets(){
@@ -25,9 +25,20 @@ public class Assets {
 		emptyWay = ImageLoader.loadImage("/images/emptyWay.png");
 		raster = ImageLoader.loadImage("/images/raster.png");
 		
-		inky = ImageLoader.loadImage("/images/blueGhost.png");	// Blau
-		blinky = ImageLoader.loadImage("/images/redGhost.png");	// Rot
-		pinky = ImageLoader.loadImage("/images/pinkGhost.png");	// Pink
+		inky = new BufferedImage[5];
+		blinky = new BufferedImage[5];
+		pinky = new BufferedImage[5];
+
+		for(int pic = 0; pic < inky.length; pic++){
+			String path = "/images/GhostAnimations/";
+			inky[pic] = ImageLoader.loadImage(path + "BlueGhost/" + pic + ".png");
+			blinky[pic] = ImageLoader.loadImage(path + "RedGhost/" + pic + ".png");
+			pinky[pic] = ImageLoader.loadImage(path + "PinkGhost/" + pic + ".png");
+		}
+		
+//		inky = ImageLoader.loadImage("/images/blueGhost.png");	// Blau
+//		blinky = ImageLoader.loadImage("/images/redGhost.png");	// Rot
+//		pinky = ImageLoader.loadImage("/images/pinkGhost.png");	// Pink
 //		pacman = ImageLoader.loadImage("/images/pacman.png");
 		
 		// Animations for pacman

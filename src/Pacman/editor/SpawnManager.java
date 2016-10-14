@@ -21,9 +21,9 @@ public class SpawnManager {
 	
 	
 	private JLabel[] pics = {
-								new JLabel(new ImageIcon(Assets.blinky)),
-								new JLabel(new ImageIcon(Assets.pinky)),
-								new JLabel(new ImageIcon(Assets.inky))};
+								new JLabel(new ImageIcon(Assets.blinky[0])),
+								new JLabel(new ImageIcon(Assets.pinky[0])),
+								new JLabel(new ImageIcon(Assets.inky[0]))};
 	
 	private JTextField[][] textfields = new JTextField[4][2];
 	private JTextField playerX, playerY;

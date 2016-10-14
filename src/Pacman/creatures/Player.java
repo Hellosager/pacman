@@ -8,15 +8,13 @@ import Pacman.level.Level;
 import Pacman.tiles.Tile;
 
 public class Player extends Creature{
-	private final static int maxTickCount = 1;
-	
 	private int state = 0;
-	private int tickCount = 0;
 
 	public Player(BufferedImage texture, Level level) {
 		super(texture, level);
 		speed = 5;
 		direction = 1;
+		maxTickCount = 1;
 	}
 
 	@Override
@@ -61,10 +59,5 @@ public class Player extends Creature{
 			}
 			break;
 		}
-	}
-	
-	public void render(Graphics g){
-		super.render(g);
-	}
-	
+	}	
 }

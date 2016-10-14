@@ -23,7 +23,6 @@ public class Game implements Runnable{
 	private Graphics g;
 	private Level level;
 	private GameInformationPanel gi;
-	private Player player;
 	private int score, lifeCount;	// score und anzahl der verbleibenden leben
 
 	public Game(Display display) {
@@ -37,7 +36,7 @@ public class Game implements Runnable{
 		canvas.requestFocus();
 
 		
-		while(running){
+		while(running && level.getLevelScore() < level.getFullWayCount()){
 			if(!paused){
 				tick();
 				render();
@@ -50,7 +49,6 @@ public class Game implements Runnable{
 	private void init(){
 		score = 0;
 		lifeCount = 3;
-		player = level.getPlayer();
 		
 		width = display.getWidth();
 		height = display.getHeight();	
@@ -96,14 +94,7 @@ public class Game implements Runnable{
 	
 	public void tick(){
 		level.tick();
-		int x = (player.getRenderX()-Tile.TILEWIDTH / 2) / Tile.TILEWIDTH + 1;
-		int y = (player.getRenderY()-Tile.TILEHEIGHT / 2) / Tile.TILEHEIGHT + 1;
-		int[][] tileMap = level.getTileMap();
-		if(tileMap[x][y] == 1){
-			tileMap[x][y] = 2;
-			score++;
-			gi.getScore().setText("Score:          " + score);
-		}
+		gi.getScore().setText("Score:          " + (score + level.getLevelScore()));
 	}
 	
 	public void render(){

@@ -3,22 +3,33 @@ package Pacman.creatures;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import Pacman.gfx.Assets;
 import Pacman.level.Level;
 import Pacman.tiles.Tile;
 
 public class Blinky extends Creature{
-	Random r = new Random();
+	private Random r = new Random();
 	private int counter = 0;
 	
 	public Blinky(BufferedImage texture, Level level) {
 		super(texture, level);
 		speed = 5;
 		direction = r.nextInt(4);
+		maxTickCount = 10;
 	}
 
 	
 	@Override
 	public void tick() {
+		// fuer den Skin
+		if(tickCount == maxTickCount){
+			texture = Assets.blinky[r.nextInt(5)];
+			tickCount = 0;
+		}else{
+			tickCount++;
+		}
+		
+		// Updatelogik
 		if(renderX%Tile.TILEWIDTH == 0 && renderY%Tile.TILEHEIGHT == 0 && newDirectionSet ){
 			newDirectionSet = false;
 		}
