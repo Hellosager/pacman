@@ -81,4 +81,8 @@ public abstract class Creature {
 	public void setTexture(BufferedImage newTexture){
 		this.texture = newTexture;
 	}
+	
+	public int getDircetion(){
+		return direction;
+	}
 }

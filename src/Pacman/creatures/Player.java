@@ -1,6 +1,5 @@
 package Pacman.creatures;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import Pacman.gfx.Assets;
@@ -13,7 +12,7 @@ public class Player extends Creature{
 	public Player(BufferedImage texture, Level level) {
 		super(texture, level);
 		speed = 5;
-		direction = 1;
+		direction = Creature.RIGHT;
 		maxTickCount = 1;
 	}
 
