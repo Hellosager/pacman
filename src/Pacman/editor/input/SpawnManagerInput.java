@@ -26,7 +26,7 @@ public class SpawnManagerInput implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		Creature[] creatures = editor.getEditMap().getCreatures();
+		Creature[] creatures = editor.getEditMap().getGhosts();
 		Player player = editor.getEditMap().getPlayer();
 		
 		try{

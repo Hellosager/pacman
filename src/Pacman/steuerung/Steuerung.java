@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import Pacman.creatures.Creature;
 import Pacman.creatures.Player;
 import Pacman.game.Game;
+import Pacman.gui.MainMenu;
 
 public class Steuerung implements KeyListener{
 	private Player player;
@@ -36,6 +37,10 @@ public class Steuerung implements KeyListener{
 		}
 		if(e.getKeyCode() == KeyEvent.VK_P){
 			game.setPaused(game.isPaused() ? false : true);
+		}
+		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+				game.stop();
+				new MainMenu(game.getDisplay());
 		}
 	}
 

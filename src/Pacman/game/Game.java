@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import Pacman.creatures.Creature;
+import Pacman.creatures.Ghost;
 import Pacman.creatures.Player;
 import Pacman.gui.Display;
 import Pacman.level.Level;
@@ -53,6 +55,7 @@ public class Game implements Runnable{
 	private void init(){
 		score = 0;
 		lifeCount = 3;
+		initGhostPaths();
 		
 		width = display.getWidth();
 		height = display.getHeight();	
@@ -79,6 +82,12 @@ public class Game implements Runnable{
 		display.getFrame().repaint();
 		display.getFrame().revalidate();
 		render();
+	}
+
+	private void initGhostPaths() {
+		for(Ghost g : level.getGhosts()){
+			g.updateFields();
+		}
 	}
 
 	public synchronized void start(){
@@ -135,5 +144,9 @@ public class Game implements Runnable{
 	
 	public boolean isPaused(){
 		return paused;
+	}
+	
+	public Display getDisplay(){
+		return display;
 	}
 }

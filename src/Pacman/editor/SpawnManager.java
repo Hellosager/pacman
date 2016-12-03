@@ -78,8 +78,8 @@ public class SpawnManager {
 				});
 	
 				switch(k){
-				case 0: textfields[i][k].setText(editor.getEditMap().getCreatures()[i].getSpawnX() + ""); break;
-				case 1: textfields[i][k].setText(editor.getEditMap().getCreatures()[i].getSpawnY() + ""); break;
+				case 0: textfields[i][k].setText(editor.getEditMap().getGhosts()[i].getSpawnX() + ""); break;
+				case 1: textfields[i][k].setText(editor.getEditMap().getGhosts()[i].getSpawnY() + ""); break;
 				}
 				spawns.add(textfields[i][k]);	
 				}

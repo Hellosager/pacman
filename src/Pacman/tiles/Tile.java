@@ -4,12 +4,16 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Tile {
+	
 	public static Tile[] tileTextures = new Tile[10];
 	public static Tile wallTile = new WallTile(0);
 	public static Tile fullWayTile = new FullWayTile(1);
 	public static Tile emptyWayTile = new EmptyWayTile(2);
 	public static Tile rasterTile = new RasterTile(3);
 	
+	public final static int WALL = wallTile.getID(); 
+	public final static int FULL_WAY = fullWayTile.getID(); 
+	public final static int EMPTY_WAY = emptyWayTile.getID(); 
 	
 	
 	public static final int TILEWIDTH = 25, TILEHEIGHT = 25;

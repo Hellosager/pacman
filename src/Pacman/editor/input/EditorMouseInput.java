@@ -103,7 +103,7 @@ public class EditorMouseInput implements MouseListener, MouseMotionListener{
 	}
 	
 	private boolean isNoSpawn(){
-		Creature[] creatures = editor.getEditMap().getCreatures();
+		Creature[] creatures = editor.getEditMap().getGhosts();
 		Player player = editor.getEditMap().getPlayer();
 		if((player.getSpawnX() == tileX/Tile.TILEWIDTH) && (player.getSpawnY() == tileY/Tile.TILEHEIGHT))
 			return false;

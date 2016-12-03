@@ -85,4 +85,13 @@ public abstract class Creature {
 	public int getDircetion(){
 		return direction;
 	}
+	
+	public int getX(){
+		return renderX / Tile.TILEWIDTH;
+	}
+	
+	public int getY(){
+		return renderY / Tile.TILEHEIGHT;
+	}
+	
 }
