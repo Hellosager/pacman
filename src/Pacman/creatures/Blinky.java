@@ -10,7 +10,13 @@ import Pacman.level.pathfinder.Dijkstra;
 import Pacman.tiles.Tile;
 
 public class Blinky extends Ghost{
+	// nach Ghost refactoren
+	protected final static int MAX_HANDICAP_COUNTER = 5;
+	
+	private final static int MIN_RANGE_TO_PLAYER_TO_STAY_CHILLED = 4;
 	private Random r = new Random();
+	private int handicapCounter = 0;
+	
 	
 	public Blinky(BufferedImage texture, Level level) {
 		super(texture, level);
@@ -49,8 +55,15 @@ public class Blinky extends Ghost{
 		
 
 		if(canSwitchDirection()){
-			currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
-			updateFields();			
+			if(getDistanceToPlayer() < MIN_RANGE_TO_PLAYER_TO_STAY_CHILLED){
+				currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
+				updateFields();							
+			}else if(handicapCounter >= MAX_HANDICAP_COUNTER){
+				currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
+				updateFields();
+				handicapCounter = 0;
+			}
+			handicapCounter++;
 		}
 	}
 	

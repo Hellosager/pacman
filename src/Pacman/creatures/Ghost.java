@@ -23,15 +23,17 @@ public abstract class Ghost extends Creature{
 
 	protected void moveTo(Knoten nextKnoten){
 		if(renderX % Tile.TILEWIDTH == 0 && renderY % Tile.TILEHEIGHT == 0){
-			if(nextKnoten.getX() > getX() && level.getTileMap()[getX()+1][getY()] != 0){ // wenn nächster knoten rechts ist
+			if(nextKnoten.getX() > getX() && level.getTileMap()[getX()+1][getY()] != Tile.WALL){ // wenn nächster knoten rechts ist
 				direction = Creature.RIGHT;
-			}else if(nextKnoten.getX() < getX() && level.getTileMap()[(renderX-speed)/Tile.TILEWIDTH][getY()] != 0){ // nächster knoten links davon 
+			}else if(nextKnoten.getX() < getX() && level.getTileMap()[(renderX-speed)/Tile.TILEWIDTH][getY()] != Tile.WALL){ // nächster knoten links davon 
 				direction = Creature.LEFT;
-			}else if(nextKnoten.getY() < getY() && level.getTileMap()[getX()][(renderY-speed)/Tile.TILEHEIGHT] != 0 ){	// nächster knoten ist drüber
+			}else if(nextKnoten.getY() < getY() && level.getTileMap()[getX()][(renderY-speed)/Tile.TILEHEIGHT] != Tile.WALL ){	// nächster knoten ist drüber
 				direction = Creature.UP;
-			}else{	// nächster knoten ist drunter
-				if(level.getTileMap()[getX()][getY()+1] != 0)
+			}else if(nextKnoten.getY() > getY() && level.getTileMap()[getX()][getY()+1] != Tile.WALL){	// nächster knoten ist drunter
 					direction = Creature.DOWN;
+			}
+			else{
+				direction = 88;
 			}
 		}	
 	}
@@ -57,5 +59,20 @@ public abstract class Ghost extends Creature{
 			count++;
 		
 		return count;
+	}
+	
+	protected int getDistanceToPlayer(){
+		Player p = level.getPlayer();
+		int vektorX = p.getX() - getX();
+		int vektorY = p.getY() - getY();
+		System.out.println("Abstand zu Player: " +  (Math.abs(vektorX) + Math.abs(vektorY)));
+		return Math.abs(vektorX) + Math.abs(vektorY);
+	}
+	
+	public void tick(){
+		// Methodenaufruf für Skin
+		// moveTo(knotenMap[getX()][getY()].getVorgänger());
+		// move();
+		// updateDirection();
 	}
 }
