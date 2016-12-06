@@ -69,6 +69,7 @@ public abstract class Ghost extends Creature{
 		return Math.abs(vektorX) + Math.abs(vektorY);
 	}
 	
+	// TODO
 	public void tick(){
 		// Methodenaufruf für Skin
 		// moveTo(knotenMap[getX()][getY()].getVorgänger());
