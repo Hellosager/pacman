@@ -18,53 +18,11 @@ public class Blinky extends Ghost{
 	private int handicapCounter = 0;
 	
 	
-	public Blinky(BufferedImage texture, Level level) {
-		super(texture, level);
+	public Blinky(BufferedImage[] skins, Level level) {
+		super(skins, level);
 		speed = 5;
 		direction = r.nextInt(4);
 		maxTickCount = 10;
-	}
-
-	
-	@Override
-	public void tick() {
-
-		// fuer den Skin
-		if(tickCount == maxTickCount){
-			texture = Assets.blinky[r.nextInt(5)];
-			tickCount = 0;
-		}else{
-			tickCount++;
-		}
-		
-		moveTo(knotenMap[getX()][getY()].getVorgänger());
-
-		switch(direction){	// in welcge richtung bewegen?
-		case Creature.UP:	// nach oben
-				renderY -= speed;
-			break;
-		case Creature.RIGHT:	// nach rechts
-				renderX += speed;
-			break;
-		case Creature.DOWN:	// nach unten
-				renderY += speed;
-			break;
-		case Creature.LEFT:	// nach links
-				renderX -= speed;
-		}
-		
-
-		if(canSwitchDirection()){
-			if(getDistanceToPlayer() < MIN_RANGE_TO_PLAYER_TO_STAY_CHILLED){
-				currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
-				updateFields();							
-			}else if(handicapCounter >= MAX_HANDICAP_COUNTER){
-				currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
-				updateFields();
-				handicapCounter = 0;
-			}
-			handicapCounter++;
-		}
 	}
 	
 	public void updateFields(){
@@ -75,4 +33,22 @@ public class Blinky extends Ghost{
 		
 		knotenMap = dj.getTileMapAlsKnoten();
 	}
+
+
+	@Override
+	void updateDirection() {
+		if(canSwitchDirection()){
+			if(getDistanceToPlayer() < MIN_RANGE_TO_PLAYER_TO_STAY_CHILLED){
+				currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
+				updateFields();							
+			}else if(handicapCounter >= MAX_HANDICAP_COUNTER){
+				currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
+				updateFields();
+				handicapCounter = 0;
+			}
+			handicapCounter++;
+		}		
+	}
+	
+	
 }

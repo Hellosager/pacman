@@ -6,8 +6,8 @@ import Pacman.level.Level;
 
 public class Inky extends Ghost{
 
-	public Inky(BufferedImage texture, Level level) {
-		super(texture, level);
+	public Inky(BufferedImage[] skins, Level level) {
+		super(skins, level);
 	}
 
 	@Override
@@ -17,6 +17,12 @@ public class Inky extends Ghost{
 
 	@Override
 	public void updateFields() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void updateDirection() {
 		// TODO Auto-generated method stub
 		
 	}

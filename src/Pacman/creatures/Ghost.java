@@ -2,7 +2,9 @@ package Pacman.creatures;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
+import Pacman.gfx.Assets;
 import Pacman.level.Level;
 import Pacman.level.pathfinder.Knoten;
 import Pacman.tiles.Tile;
@@ -13,11 +15,13 @@ public abstract class Ghost extends Creature{
 	protected static final int FEAR = 2;
 	protected static final int SPREAD = 3;
 	
+	private BufferedImage[] skins;
 	protected Point currentDestination;
 	protected Knoten[][] knotenMap;
 	
-	public Ghost(BufferedImage texture, Level level) {
-		super(texture, level);
+	public Ghost(BufferedImage[] skins, Level level) {
+		super(skins[0], level);
+		this.skins = skins;
 		
 	}
 
@@ -71,9 +75,38 @@ public abstract class Ghost extends Creature{
 	
 	// TODO
 	public void tick(){
-		// Methodenaufruf für Skin
-		// moveTo(knotenMap[getX()][getY()].getVorgänger());
-		// move();
-		// updateDirection();
+		changeSkin(skins);
+		moveTo(knotenMap[getX()][getY()].getVorgänger());
+		move();
+		updateDirection();
 	}
+	
+	abstract void updateDirection();
+	
+	private void changeSkin(BufferedImage[] skins){
+		Random r = new Random();
+		if(tickCount == maxTickCount){
+			texture = skins[r.nextInt(skins.length)];
+			tickCount = 0;
+		}else{
+			tickCount++;
+		}
+	}
+	
+	private void move(){
+		switch(direction){	// in welcge richtung bewegen?
+		case Creature.UP:	// nach oben
+				renderY -= speed;
+			break;
+		case Creature.RIGHT:	// nach rechts
+				renderX += speed;
+			break;
+		case Creature.DOWN:	// nach unten
+				renderY += speed;
+			break;
+		case Creature.LEFT:	// nach links
+				renderX -= speed;
+		}
+	}
+	
 }

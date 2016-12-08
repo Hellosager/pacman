@@ -6,8 +6,8 @@ import Pacman.level.Level;
 
 public class Pinky extends Ghost{
 
-	public Pinky(BufferedImage texture, Level level) {
-		super(texture, level );
+	public Pinky(BufferedImage[] skins, Level level) {
+		super(skins, level);
 	}
 
 	@Override
@@ -17,6 +17,12 @@ public class Pinky extends Ghost{
 
 	@Override
 	public void updateFields() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void updateDirection() {
 		// TODO Auto-generated method stub
 		
 	}
