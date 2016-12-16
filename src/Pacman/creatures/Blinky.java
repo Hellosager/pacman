@@ -38,9 +38,11 @@ public class Blinky extends Ghost{
 	@Override
 	void updateDirection() {
 		if(canSwitchDirection()){
+			// wenn Distance unter der Minimalgrenze ist, dann wird jeder tick neu gesetzt
 			if(getDistanceToPlayer() < MIN_RANGE_TO_PLAYER_TO_STAY_CHILLED){
 				currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
 				updateFields();							
+			// Ansonsten nur alle paar ticks, enn der handicap counter größer als max handicap ist
 			}else if(handicapCounter >= MAX_HANDICAP_COUNTER){
 				currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
 				updateFields();

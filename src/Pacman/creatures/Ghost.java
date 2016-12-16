@@ -34,7 +34,7 @@ public abstract class Ghost extends Creature{
 			}else if(nextKnoten.getY() < getY() && level.getTileMap()[getX()][(renderY-speed)/Tile.TILEHEIGHT] != Tile.WALL ){	// nächster knoten ist drüber
 				direction = Creature.UP;
 			}else if(nextKnoten.getY() > getY() && level.getTileMap()[getX()][getY()+1] != Tile.WALL){	// nächster knoten ist drunter
-					direction = Creature.DOWN;
+				direction = Creature.DOWN;
 			}
 			else{
 				direction = 88;
@@ -43,6 +43,7 @@ public abstract class Ghost extends Creature{
 	}
 	
 	public abstract void updateFields();
+	abstract void updateDirection();
 	
 	//switch direction wenn mehr als ein weg oder sackgasse oder altes feld erreicht wurde
 	protected boolean canSwitchDirection(){
@@ -69,19 +70,21 @@ public abstract class Ghost extends Creature{
 		Player p = level.getPlayer();
 		int vektorX = p.getX() - getX();
 		int vektorY = p.getY() - getY();
-		System.out.println("Abstand zu Player: " +  (Math.abs(vektorX) + Math.abs(vektorY)));
 		return Math.abs(vektorX) + Math.abs(vektorY);
 	}
 	
 	// TODO
 	public void tick(){
+		// Change Skin for every Ghost ok
 		changeSkin(skins);
+		// Changes direction to the next node
 		moveTo(knotenMap[getX()][getY()].getVorgänger());
+		// just incrase the the render coords
 		move();
+		// Muss immer neu implementiert werden
 		updateDirection();
 	}
 	
-	abstract void updateDirection();
 	
 	private void changeSkin(BufferedImage[] skins){
 		Random r = new Random();
