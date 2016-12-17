@@ -20,7 +20,6 @@ public abstract class Creature {
 	protected int newDirection;
 	protected Level level;
 	protected boolean newDirectionSet = false;
-	protected int maxTickCount;
 	protected int tickCount = 0;
 	
 	public Creature(BufferedImage texture, Level level){

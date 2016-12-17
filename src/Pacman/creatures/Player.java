@@ -8,12 +8,12 @@ import Pacman.tiles.Tile;
 
 public class Player extends Creature{
 	private int state = 0;
+	private static final int MAX_TICK_COUNT = 1;
 
 	public Player(BufferedImage texture, Level level) {
 		super(texture, level);
 		speed = 5;
 		direction = Creature.RIGHT;
-		maxTickCount = 1;
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class Player extends Creature{
 		texture = Assets.pacmanDircetions[direction][Math.abs(state)];
 		
 		// kann mi Math.abs geregelt werden siehe eins oben, state soll nur alle paar frames geregelt werden 
-		if(tickCount == maxTickCount){
+		if(tickCount == MAX_TICK_COUNT){
 			if(state < Assets.pacmanDircetions[direction].length-1)
 				state++;
 			else

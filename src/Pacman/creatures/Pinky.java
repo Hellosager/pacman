@@ -28,9 +28,10 @@ public class Pinky extends Ghost{
 
 	@Override
 	void updateDirection() {
-		System.out.println(currentDestination);
-		currentDestination = getFourNodesInFrontOfPacman();
-		updateFields();
+		if((currentDestination == null) || (currentDestination.x == getX() && currentDestination.y == getY())){
+			currentDestination = getFourNodesInFrontOfPacman();
+			updateFields();
+		}
 	}
 	
 	private Point getFourNodesInFrontOfPacman(){

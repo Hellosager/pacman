@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import Pacman.gfx.Assets;
 import Pacman.level.Level;
 import Pacman.level.pathfinder.Knoten;
 import Pacman.tiles.Tile;
@@ -14,6 +13,7 @@ public abstract class Ghost extends Creature{
 	protected static final int HUNT = 1;
 	protected static final int FEAR = 2;
 	protected static final int SPREAD = 3;
+	protected static final int MAX_TICK_COUNT = 10;
 	
 	private BufferedImage[] skins;
 	protected Point currentDestination;
@@ -88,7 +88,7 @@ public abstract class Ghost extends Creature{
 	
 	private void changeSkin(BufferedImage[] skins){
 		Random r = new Random();
-		if(tickCount == maxTickCount){
+		if(tickCount == MAX_TICK_COUNT){
 			texture = skins[r.nextInt(skins.length)];
 			tickCount = 0;
 		}else{

@@ -22,7 +22,6 @@ public class Blinky extends Ghost{
 		super(skins, level);
 		speed = 5;
 		direction = r.nextInt(4);
-		maxTickCount = 10;
 	}
 	
 	public void updateFields(){
