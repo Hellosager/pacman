@@ -20,49 +20,18 @@ public class Pinky extends Ghost{
 		int x = renderX / Tile.TILEWIDTH;
 		int y = renderY / Tile.TILEHEIGHT;
 		// 4 Felder vor Pacman berechnen
-		Point fourBeforePac = getFourNodesInFrontOfPacman();
+		currentDestination = getXNodesInFrontOfPacman(4);
 		
-		dj.findPath(fourBeforePac.x, fourBeforePac.y, x, y);
+		dj.findPath(currentDestination.x, currentDestination.y, x, y);
 		knotenMap = dj.getTileMapAlsKnoten();		
 	}
 
 	@Override
 	void updateDirection() {
+		// Wenn das Feld erreicht wurde, berechne den Weg neu
 		if((currentDestination == null) || (currentDestination.x == getX() && currentDestination.y == getY())){
-			currentDestination = getFourNodesInFrontOfPacman();
+			currentDestination = getXNodesInFrontOfPacman(4);
 			updateFields();
 		}
 	}
-	
-	private Point getFourNodesInFrontOfPacman(){
-//		if(getX() == currentDestination.x && getY() == currentDestination.y){
-			
-		Player p = level.getPlayer();
-		int x = p.getX();
-		int y = p.getY();
-		
-		switch(p.getDircetion()){
-			case Creature.RIGHT:
-				while(level.getTileMap()[x+1][y] != Tile.WALL && x-p.getX() < 4)
-					x++;
-				break;
-			case Creature.LEFT:
-				while(level.getTileMap()[x-1][y] != Tile.WALL && p.getX()-x < 4)
-					x--;
-				break;
-			case Creature.UP:
-				while(level.getTileMap()[x][y-1] != Tile.WALL && p.getY()-y < 4)
-					y--;
-				break;
-			case Creature.DOWN:
-				while(level.getTileMap()[x][y+1] != Tile.WALL && y-p.getY() < 4)
-					y++;
-				break;
-		}
-		
-		return new Point(x, y);
-//		}
-//		return currentDestination;
-	}
-
 }

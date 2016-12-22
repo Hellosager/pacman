@@ -11,7 +11,7 @@ import Pacman.tiles.Tile;
 
 public class Blinky extends Ghost{
 	// nach Ghost refactoren
-	protected final static int MAX_HANDICAP_COUNTER = 5;
+	protected final static int MAX_HANDICAP_COUNTER = 10;
 	
 	private final static int MIN_RANGE_TO_PLAYER_TO_STAY_CHILLED = 4;
 	private Random r = new Random();

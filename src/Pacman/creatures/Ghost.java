@@ -112,4 +112,36 @@ public abstract class Ghost extends Creature{
 		}
 	}
 	
+	protected Point getXNodesInFrontOfPacman(int fieldsBeforePacman){
+//		if(getX() == currentDestination.x && getY() == currentDestination.y){
+			
+		Player p = level.getPlayer();
+		int x = p.getX();
+		int y = p.getY();
+		
+		switch(p.getDircetion()){
+			case Creature.RIGHT:
+				while(level.getTileMap()[x+1][y] != Tile.WALL && x-p.getX() < fieldsBeforePacman)
+					x++;
+				break;
+			case Creature.LEFT:
+				while(level.getTileMap()[x-1][y] != Tile.WALL && p.getX()-x < fieldsBeforePacman)
+					x--;
+				break;
+			case Creature.UP:
+				while(level.getTileMap()[x][y-1] != Tile.WALL && p.getY()-y < fieldsBeforePacman)
+					y--;
+				break;
+			case Creature.DOWN:
+				while(level.getTileMap()[x][y+1] != Tile.WALL && y-p.getY() < fieldsBeforePacman)
+					y++;
+				break;
+		}
+		
+		return new Point(x, y);
+//		}
+//		return currentDestination;
+	}
+
+	
 }
