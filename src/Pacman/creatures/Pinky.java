@@ -1,6 +1,5 @@
 package Pacman.creatures;
 
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import Pacman.level.Level;
@@ -12,10 +11,11 @@ public class Pinky extends Ghost{
 	public Pinky(BufferedImage[] skins, Level level) {
 		super(skins, level);
 		speed = 5;
+		currentMode = MODE_SPREAD;
 	}
 
 	@Override
-	public void updateFields() {
+	public void updateFieldsHunt() {
 		Dijkstra dj = new Dijkstra(level);
 		int x = renderX / Tile.TILEWIDTH;
 		int y = renderY / Tile.TILEHEIGHT;

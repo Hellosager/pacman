@@ -2,9 +2,7 @@ package Pacman.creatures;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
-import Pacman.gfx.Assets;
 import Pacman.level.Level;
 import Pacman.level.pathfinder.Dijkstra;
 import Pacman.tiles.Tile;
@@ -14,17 +12,16 @@ public class Blinky extends Ghost{
 	protected final static int MAX_HANDICAP_COUNTER = 10;
 	
 	private final static int MIN_RANGE_TO_PLAYER_TO_STAY_CHILLED = 4;
-	private Random r = new Random();
 	private int handicapCounter = 0;
 	
 	
 	public Blinky(BufferedImage[] skins, Level level) {
 		super(skins, level);
 		speed = 5;
-		direction = r.nextInt(4);
+		currentMode = MODE_SPREAD;
 	}
 	
-	public void updateFields(){
+	public void updateFieldsHunt(){
 		Dijkstra dj = new Dijkstra(level);
 		int x = renderX / Tile.TILEWIDTH;
 		int y = renderY / Tile.TILEHEIGHT;

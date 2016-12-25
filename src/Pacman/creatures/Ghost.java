@@ -5,16 +5,18 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import Pacman.level.Level;
+import Pacman.level.pathfinder.Dijkstra;
 import Pacman.level.pathfinder.Knoten;
 import Pacman.tiles.Tile;
 
 public abstract class Ghost extends Creature{
 
-	protected static final int HUNT = 1;
-	protected static final int FEAR = 2;
-	protected static final int SPREAD = 3;
+	protected static final int MODE_HUNT = 1;
+	protected static final int MODE_FEAR = 2;
+	protected static final int MODE_SPREAD = 3;
 	protected static final int MAX_TICK_COUNT = 10;
 	
+	protected int currentMode;
 	private BufferedImage[] skins;
 	protected Point currentDestination;
 	protected Knoten[][] knotenMap;
@@ -22,7 +24,6 @@ public abstract class Ghost extends Creature{
 	public Ghost(BufferedImage[] skins, Level level) {
 		super(skins[0], level);
 		this.skins = skins;
-		
 	}
 
 	protected void moveTo(Knoten nextKnoten){
@@ -42,8 +43,32 @@ public abstract class Ghost extends Creature{
 		}	
 	}
 	
-	public abstract void updateFields();
+	public void updateFields(){
+		switch(currentMode){
+			case MODE_HUNT: updateFieldsHunt(); break;
+			case MODE_SPREAD: updateFieldsSpread(); break;
+//			case FEAR:	break;
+		}
+	}
+	
 	abstract void updateDirection();
+	
+	// HUNT - individuell implementieren
+	protected abstract void updateFieldsHunt();
+	
+	// SPREAD MODE
+	protected void updateFieldsSpread(){
+		Random r = new Random();
+		Point[] allWayTiles = level.getAllWayTiles();
+		
+		Dijkstra dj = new Dijkstra(level);
+		int x = getX();
+		int y = getY();
+		currentDestination = allWayTiles[r.nextInt(allWayTiles.length)];
+		
+		dj.findPath(currentDestination.x, currentDestination.y, x, y);
+		knotenMap = dj.getTileMapAlsKnoten();
+	}
 	
 	//switch direction wenn mehr als ein weg oder sackgasse oder altes feld erreicht wurde
 	protected boolean canSwitchDirection(){

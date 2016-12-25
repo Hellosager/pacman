@@ -12,11 +12,12 @@ public class Inky extends Ghost{
 	public Inky(BufferedImage[] skins, Level level) {
 		super(skins, level);
 		speed = 5;
+		currentMode = MODE_SPREAD;
 	}
 
 
 	@Override
-	public void updateFields() {
+	public void updateFieldsHunt() {
 		Dijkstra dj = new Dijkstra(level);
 		int x = renderX / Tile.TILEWIDTH;
 		int y = renderY / Tile.TILEHEIGHT;
@@ -37,7 +38,6 @@ public class Inky extends Ghost{
 		}		
 	}
 
-	// TODO returned knoten trifft auf wand oder ist out of range !!! <--------------
 	private Point getDestinationNode() {
 		Point twoBeforePacman = getXNodesInFrontOfPacman(2); // zwei for Pacman
 		Ghost blinky = level.getGhosts()[0]; // Blinky
