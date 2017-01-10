@@ -138,8 +138,6 @@ public abstract class Ghost extends Creature{
 	}
 	
 	protected Point getXNodesInFrontOfPacman(int fieldsBeforePacman){
-//		if(getX() == currentDestination.x && getY() == currentDestination.y){
-			
 		Player p = level.getPlayer();
 		int x = p.getX();
 		int y = p.getY();
@@ -162,10 +160,7 @@ public abstract class Ghost extends Creature{
 					y++;
 				break;
 		}
-		
 		return new Point(x, y);
-//		}
-//		return currentDestination;
 	}
 
 	
