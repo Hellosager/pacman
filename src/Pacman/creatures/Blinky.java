@@ -23,9 +23,8 @@ public class Blinky extends Ghost{
 	
 	public void updateFieldsHunt(){
 		Dijkstra dj = new Dijkstra(level);
-		int x = renderX / Tile.TILEWIDTH;
-		int y = renderY / Tile.TILEHEIGHT;
-		dj.findPath(level.getPlayer().getX(), level.getPlayer().getY(), x, y);
+		currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
+		dj.findPath(currentDestination.x, currentDestination.y, getX(), getY());
 		
 		knotenMap = dj.getTileMapAlsKnoten();
 	}
@@ -33,19 +32,25 @@ public class Blinky extends Ghost{
 
 	@Override
 	void updateDirection() {
-		if(canSwitchDirection()){
-			// wenn Distance unter der Minimalgrenze ist, dann wird jeder tick neu gesetzt
-			if(getDistanceToPlayer() < MIN_RANGE_TO_PLAYER_TO_STAY_CHILLED){
-				currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
-				updateFields();							
-			// Ansonsten nur alle paar ticks, enn der handicap counter größer als max handicap ist
-			}else if(handicapCounter >= MAX_HANDICAP_COUNTER){
-				currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
-				updateFields();
-				handicapCounter = 0;
+		if(currentMode == MODE_HUNT){
+			if(canSwitchDirection()){
+				// wenn Distance unter der Minimalgrenze ist, dann wird jeder tick neu gesetzt
+				if(getDistanceToPlayer() < MIN_RANGE_TO_PLAYER_TO_STAY_CHILLED){
+					updateFields();							
+					// Ansonsten nur alle paar ticks, enn der handicap counter größer als max handicap ist
+				}else if(handicapCounter >= MAX_HANDICAP_COUNTER){
+//					currentDestination = new Point(level.getPlayer().getX(), level.getPlayer().getY());
+					updateFields();
+					handicapCounter = 0;
+				}
+				handicapCounter++;
 			}
-			handicapCounter++;
-		}		
+		}else{
+			if((currentDestination == null) || (currentDestination.x == getX() && currentDestination.y == getY())){
+				System.out.println("Feld wurde erreicht");
+				updateFields();
+			}
+		}
 	}
 	
 	

@@ -2,6 +2,7 @@ package Pacman.steuerung;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Date;
 
 import Pacman.creatures.Creature;
 import Pacman.creatures.Player;
@@ -11,6 +12,7 @@ import Pacman.gui.MainMenu;
 public class Steuerung implements KeyListener{
 	private Player player;
 	private Game game;
+	private Date pausedAt;
 	
 	public Steuerung(Player player, Game game) {
 		this.player = player;
@@ -36,7 +38,15 @@ public class Steuerung implements KeyListener{
 			player.setNewDirection(Creature.LEFT);
 		}
 		if(e.getKeyCode() == KeyEvent.VK_P){
-			game.setPaused(game.isPaused() ? false : true);
+			if(game.isPaused()){
+				game.setPaused(false);
+				game.setModeTime(new Date(game.getModeTime().getTime() + pausedAt.getTime()));
+			}
+			else{
+				game.setPaused(true);
+				pausedAt = new Date();
+			}
+			
 		}
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
 				game.stop();

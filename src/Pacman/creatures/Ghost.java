@@ -15,6 +15,7 @@ public abstract class Ghost extends Creature{
 	protected static final int MODE_FEAR = 2;
 	protected static final int MODE_SPREAD = 3;
 	protected static final int MAX_TICK_COUNT = 10;
+	private static final Point[] corners = {new Point(1, 1), new Point(1, 22), new Point(22, 1), new Point(22, 22)};
 	
 	protected int currentMode;
 	private BufferedImage[] skins;
@@ -46,8 +47,8 @@ public abstract class Ghost extends Creature{
 	public void updateFields(){
 		switch(currentMode){
 			case MODE_HUNT: updateFieldsHunt(); break;
+			case MODE_FEAR: updateFieldsFear(); break;
 			case MODE_SPREAD: updateFieldsSpread(); break;
-//			case FEAR:	break;
 		}
 	}
 	
@@ -67,6 +68,14 @@ public abstract class Ghost extends Creature{
 		currentDestination = allWayTiles[r.nextInt(allWayTiles.length)];
 		
 		dj.findPath(currentDestination.x, currentDestination.y, x, y);
+		knotenMap = dj.getTileMapAlsKnoten();
+	}
+	
+	// FEAR MODE
+	protected void updateFieldsFear(){
+		currentDestination = corners[new Random().nextInt(corners.length)];
+		Dijkstra dj = new Dijkstra(level);
+		dj.findPath(currentDestination.x, currentDestination.y, this.getX(), this.getY());
 		knotenMap = dj.getTileMapAlsKnoten();
 	}
 	
@@ -161,6 +170,14 @@ public abstract class Ghost extends Creature{
 				break;
 		}
 		return new Point(x, y);
+	}
+
+	public void changeMode() {
+		if(currentMode == MODE_SPREAD)
+			currentMode = 1;
+		else
+			currentMode++;
+		System.out.println("Mode now: " + currentMode);
 	}
 
 	

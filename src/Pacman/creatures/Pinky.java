@@ -17,12 +17,10 @@ public class Pinky extends Ghost{
 	@Override
 	public void updateFieldsHunt() {
 		Dijkstra dj = new Dijkstra(level);
-		int x = renderX / Tile.TILEWIDTH;
-		int y = renderY / Tile.TILEHEIGHT;
 		// 4 Felder vor Pacman berechnen
 		currentDestination = getXNodesInFrontOfPacman(4);
 		
-		dj.findPath(currentDestination.x, currentDestination.y, x, y);
+		dj.findPath(currentDestination.x, currentDestination.y, getX(), getY());
 		knotenMap = dj.getTileMapAlsKnoten();		
 	}
 

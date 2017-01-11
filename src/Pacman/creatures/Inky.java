@@ -19,12 +19,10 @@ public class Inky extends Ghost{
 	@Override
 	public void updateFieldsHunt() {
 		Dijkstra dj = new Dijkstra(level);
-		int x = renderX / Tile.TILEWIDTH;
-		int y = renderY / Tile.TILEHEIGHT;
 		// 2 Felder vor Pacman, Vektor Blinky zu diesem Feld, verdoppeln
 		currentDestination = getDestinationNode();
 		
-		dj.findPath(currentDestination.x, currentDestination.y, x, y);
+		dj.findPath(currentDestination.x, currentDestination.y, getX(), getY());
 		knotenMap = dj.getTileMapAlsKnoten();			
 	}
 

@@ -5,8 +5,9 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.time.LocalTime;
+import java.util.Date;
 
-import Pacman.creatures.Creature;
 import Pacman.creatures.Ghost;
 import Pacman.creatures.Player;
 import Pacman.gui.Display;
@@ -26,6 +27,7 @@ public class Game implements Runnable{
 	private Level level;
 	private GameInformationPanel gi;
 	private Player player;
+	private Date modeTime;
 	private int score, lifeCount;	// score und anzahl der verbleibenden leben
 
 	public Game(Display display) {
@@ -40,10 +42,16 @@ public class Game implements Runnable{
 
 		
 		while(running){
+			if(modeTime == null)
+				modeTime = new Date();
 //			long start = System.nanoTime();
 			if(!paused){
 				tick();
 				render();
+			}
+			if((new Date().getTime() - modeTime.getTime()) >= 15000){
+				modeTime = null;
+				level.changeModes();
 			}
 //			long end = System.nanoTime();
 //			System.out.println("Gebraucht für gamelopp: " + (end - start));
@@ -148,5 +156,13 @@ public class Game implements Runnable{
 	
 	public Display getDisplay(){
 		return display;
+	}
+	
+	public Date getModeTime(){
+		return modeTime;
+	}
+	
+	public void setModeTime(Date modeTime){
+		this.modeTime = modeTime;
 	}
 }
