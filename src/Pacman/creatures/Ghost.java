@@ -21,6 +21,8 @@ public abstract class Ghost extends Creature{
 	private BufferedImage[] skins;
 	protected Point currentDestination;
 	protected Knoten[][] knotenMap;
+	protected int idForFullWayTile;
+	protected int idForEmptyWayTile;
 	
 	public Ghost(BufferedImage[] skins, Level level) {
 		super(skins[0], level);
@@ -45,11 +47,27 @@ public abstract class Ghost extends Creature{
 	}
 	
 	public void updateFields(){
+		if(level.showDestinations())
+		updateDestination(true);
 		switch(currentMode){
 			case MODE_HUNT: updateFieldsHunt(); break;
 			case MODE_FEAR: updateFieldsFear(); break;
 			case MODE_SPREAD: updateFieldsSpread(); break;
 		}
+		if(level.showDestinations())
+		updateDestination(false);
+	}
+	
+	public void updateDestination(boolean clear){
+//		if(level.showDestinations()){
+			if(!clear){
+				level.getTileMap()[currentDestination.x][currentDestination.y] = 
+					level.coordIsFullWay(currentDestination.x, currentDestination.y) ? idForFullWayTile : idForEmptyWayTile; 
+			}else{
+				level.getTileMap()[currentDestination.x][currentDestination.y] = 
+						level.coordIsFullWay(currentDestination.x, currentDestination.y) ? Tile.FULL_WAY : Tile.EMPTY_WAY; 
+			}
+//		}
 	}
 	
 	abstract void updateDirection();
@@ -115,6 +133,7 @@ public abstract class Ghost extends Creature{
 		moveTo(knotenMap[getX()][getY()].getVorgänger());
 		// just incrase the the render coords
 		move();
+//		updateDestination(false);
 		// Muss immer neu implementiert werden
 		updateDirection();
 	}
@@ -173,12 +192,25 @@ public abstract class Ghost extends Creature{
 	}
 
 	public void changeMode() {
+//		updateDestinations();
 		if(currentMode == MODE_SPREAD)
 			currentMode = 1;
 		else
 			currentMode++;
-		System.out.println("Mode now: " + currentMode);
 	}
 
+	public Point getCurrentDestination(){
+		return currentDestination;
+	}
+
+	public int getIdForFullWayTile() {
+		return idForFullWayTile;
+	}
+
+	public int getIdForEmptyWayTile() {
+		return idForEmptyWayTile;
+	}
+	
+	
 	
 }

@@ -11,6 +11,8 @@ public class Pinky extends Ghost{
 	public Pinky(BufferedImage[] skins, Level level) {
 		super(skins, level);
 		speed = 5;
+		idForFullWayTile = Tile.FULL_WAY_PINK;		
+		idForEmptyWayTile = Tile.EMPTY_WAY_PINK;
 		currentMode = MODE_SPREAD;
 	}
 
@@ -28,7 +30,6 @@ public class Pinky extends Ghost{
 	void updateDirection() {
 		// Wenn das Feld erreicht wurde, berechne den Weg neu
 		if((currentDestination == null) || (currentDestination.x == getX() && currentDestination.y == getY())){
-			currentDestination = getXNodesInFrontOfPacman(4);
 			updateFields();
 		}
 	}

@@ -12,6 +12,8 @@ public class Inky extends Ghost{
 	public Inky(BufferedImage[] skins, Level level) {
 		super(skins, level);
 		speed = 5;
+		idForFullWayTile = Tile.FULL_WAY_BLUE;		
+		idForEmptyWayTile = Tile.EMPTY_WAY_BLUE;
 		currentMode = MODE_SPREAD;
 	}
 
@@ -31,7 +33,6 @@ public class Inky extends Ghost{
 	void updateDirection() {
 		// Wenn Feld erreicht wurde, berechne den Weg neu
 		if((currentDestination == null) || (currentDestination.x == getX() && currentDestination.y == getY())){
-			currentDestination = getXNodesInFrontOfPacman(2);
 			updateFields();
 		}		
 	}

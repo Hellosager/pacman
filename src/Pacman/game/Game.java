@@ -49,7 +49,7 @@ public class Game implements Runnable{
 				tick();
 				render();
 			}
-			if((new Date().getTime() - modeTime.getTime()) >= 15000){
+			if((new Date().getTime() - modeTime.getTime()) >= 15000 && !paused){
 				modeTime = null;
 				level.changeModes();
 			}
@@ -144,6 +144,10 @@ public class Game implements Runnable{
 	public void setLevel(Level level){
 		this.level = level;
 		this.player = level.getPlayer();
+	}
+	
+	public Level getLevel(){
+		return level;
 	}
 	
 	public void setPaused(boolean paused){

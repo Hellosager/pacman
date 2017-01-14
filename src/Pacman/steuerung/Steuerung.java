@@ -40,13 +40,12 @@ public class Steuerung implements KeyListener{
 		if(e.getKeyCode() == KeyEvent.VK_P){
 			if(game.isPaused()){
 				game.setPaused(false);
-				game.setModeTime(new Date(game.getModeTime().getTime() + pausedAt.getTime()));
+				game.setModeTime(new Date(game.getModeTime().getTime() - (new Date().getTime() - pausedAt.getTime())));
 			}
 			else{
 				game.setPaused(true);
 				pausedAt = new Date();
 			}
-			
 		}
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
 				game.stop();
@@ -56,7 +55,9 @@ public class Steuerung implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		
+		if(e.getKeyCode() == KeyEvent.VK_X){
+			game.getLevel().changeShowDestinations();
+		}
 	}
 
 	@Override

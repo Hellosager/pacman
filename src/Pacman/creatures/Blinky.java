@@ -18,6 +18,8 @@ public class Blinky extends Ghost{
 	public Blinky(BufferedImage[] skins, Level level) {
 		super(skins, level);
 		speed = 5;
+		idForFullWayTile = Tile.FULL_WAY_RED;		
+		idForEmptyWayTile = Tile.EMPTY_WAY_RED;
 		currentMode = MODE_SPREAD;
 	}
 	
@@ -47,7 +49,6 @@ public class Blinky extends Ghost{
 			}
 		}else{
 			if((currentDestination == null) || (currentDestination.x == getX() && currentDestination.y == getY())){
-				System.out.println("Feld wurde erreicht");
 				updateFields();
 			}
 		}

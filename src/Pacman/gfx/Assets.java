@@ -8,6 +8,7 @@ public class Assets {
 
 	public static BufferedImage play, playOutline, score, scoreOutline, title, editor, editorOutline;
 	public static BufferedImage wall, fullWay, emptyWay, raster;
+	public static BufferedImage fullWayRed, fullWayPink, fullWayBlue, emptyWayRed, emptyWayBlue, emptyWayPink;
 	public static BufferedImage[] inky, blinky, pinky;
 	public static BufferedImage[][] pacmanDircetions;
 	
@@ -24,6 +25,14 @@ public class Assets {
 		fullWay = ImageLoader.loadImage("/images/fullWay.png");
 		emptyWay = ImageLoader.loadImage("/images/emptyWay.png");
 		raster = ImageLoader.loadImage("/images/raster.png");
+		
+		fullWayRed = ImageLoader.loadImage("/images/fullWayRed.png");
+		fullWayPink = ImageLoader.loadImage("/images/fullWayPink.png");
+		fullWayBlue = ImageLoader.loadImage("/images/fullWayBlue.png");
+		emptyWayRed = ImageLoader.loadImage("/images/emptyWayRed.png");
+		emptyWayPink = ImageLoader.loadImage("/images/emptyWayPink.png");
+		emptyWayBlue = ImageLoader.loadImage("/images/emptyWayBlue.png");
+
 		
 		inky = new BufferedImage[5];
 		blinky = new BufferedImage[5];
