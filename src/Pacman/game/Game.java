@@ -48,6 +48,7 @@ public class Game implements Runnable{
 			if(!paused){
 				tick();
 				render();
+				checkCollision();
 			}
 			if((new Date().getTime() - modeTime.getTime()) >= 15000 && !paused){
 				modeTime = null;
@@ -168,5 +169,14 @@ public class Game implements Runnable{
 	
 	public void setModeTime(Date modeTime){
 		this.modeTime = modeTime;
+	}
+	
+	private void checkCollision(){
+		Player p = level.getPlayer();
+		Ghost[] ghosts = level.getGhosts();
+		for(Ghost g : ghosts){
+			if(p.getHitbox().intersects(g.getHitbox()))
+				running = false;
+		}
 	}
 }

@@ -1,16 +1,20 @@
 package Pacman.creatures;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import Pacman.level.Level;
 import Pacman.tiles.Tile;
 
 public abstract class Creature {
+	private static final int HITBOX_SIZE = 15;
+	
 	public static final int UP = 0;
 	public static final int RIGHT = 1;
 	public static final int DOWN = 2;
 	public static final int LEFT = 3;
+	
 	
 	protected BufferedImage texture;
 	protected int renderX, renderY;
@@ -21,6 +25,8 @@ public abstract class Creature {
 	protected Level level;
 	protected boolean newDirectionSet = false;
 	protected int tickCount = 0;
+	
+	protected Rectangle hitbox = new Rectangle(HITBOX_SIZE, HITBOX_SIZE);
 	
 	public Creature(BufferedImage texture, Level level){
 		this.texture = texture;
@@ -93,4 +99,8 @@ public abstract class Creature {
 		return renderY / Tile.TILEHEIGHT;
 	}
 	
+	public Rectangle getHitbox(){
+		hitbox.setLocation(renderX+5, renderY+5);
+		return hitbox;
+	}
 }
