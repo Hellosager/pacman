@@ -285,7 +285,7 @@ public class Level {
 	public void resetSpawns(){
 		player.setSpawnX(player.getSpawnX());
 		player.setSpawnY(player.getSpawnY());
-		player.setNewDirection(Creature.RIGHT);
+		player.setDirection(Creature.RIGHT);
 		player.resetState();
 		
 		for(Ghost g : ghosts){

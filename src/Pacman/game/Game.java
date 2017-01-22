@@ -42,13 +42,13 @@ public class Game implements Runnable{
 		canvas.requestFocus();
 		
 		while(levelIsPlayed){
-			running = true;
 			for(int number = 3; number > 0; number--){
 				if(!levelIsPlayed)
 					break;
 				renderCountdown(number);
 			}
 			
+			running = true;
 			while(running){
 				if(modeTime == null)
 					modeTime = new Date();
@@ -221,6 +221,10 @@ public class Game implements Runnable{
 		if(lifeCount != 0)
 			gi.getLifes()[lifeCount-1].setIcon(null);
 		lifeCount--;
+	}
+	
+	public boolean isRunning(){
+		return running;
 	}
 	
 	private void checkCollision(){

@@ -79,6 +79,10 @@ public abstract class Creature {
 		this.newDirection = newDirection;
 	}
 	
+	public void setDirection(int direction){
+		this.direction = direction;
+	}
+	
 	public void setNewDirectionSet(boolean b){
 		newDirectionSet = b;
 	}

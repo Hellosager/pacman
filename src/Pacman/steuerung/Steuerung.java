@@ -22,20 +22,28 @@ public class Steuerung implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_W && !game.isPaused()){
-			player.setNewDirectionSet(true);
-			player.setNewDirection(Creature.UP);
+			if(game.isRunning()){
+				player.setNewDirectionSet(true);
+				player.setNewDirection(Creature.UP);				
+			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_D && !game.isPaused()){
-			player.setNewDirectionSet(true);
-			player.setNewDirection(Creature.RIGHT);
+			if(game.isRunning()){
+				player.setNewDirectionSet(true);
+				player.setNewDirection(Creature.RIGHT);
+			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_S && !game.isPaused()){
-			player.setNewDirectionSet(true);
-			player.setNewDirection(Creature.DOWN);
+			if(game.isRunning()){
+				player.setNewDirectionSet(true);
+				player.setNewDirection(Creature.DOWN);				
+			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_A && !game.isPaused()){
-			player.setNewDirectionSet(true);
-			player.setNewDirection(Creature.LEFT);
+			if(game.isRunning()){
+				player.setNewDirectionSet(true);
+				player.setNewDirection(Creature.LEFT);
+			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_P){
 			if(game.isPaused()){
