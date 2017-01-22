@@ -11,9 +11,9 @@ import Pacman.tiles.Tile;
 
 public abstract class Ghost extends Creature{
 
-	protected static final int MODE_HUNT = 1;
-	protected static final int MODE_FEAR = 2;
-	protected static final int MODE_SPREAD = 3;
+	public static final int MODE_HUNT = 1;
+	public static final int MODE_FEAR = 2;
+	public static final int MODE_SPREAD = 3;
 	protected static final int MAX_TICK_COUNT = 10;
 	private static final Point[] corners = {new Point(1, 1), new Point(1, 22), new Point(22, 1), new Point(22, 22)};
 	
@@ -48,14 +48,14 @@ public abstract class Ghost extends Creature{
 	
 	public void updateFields(){
 		if(level.showDestinations())
-		updateDestination(true);
+			updateDestination(true);
 		switch(currentMode){
 			case MODE_HUNT: updateFieldsHunt(); break;
 			case MODE_FEAR: updateFieldsFear(); break;
 			case MODE_SPREAD: updateFieldsSpread(); break;
 		}
 		if(level.showDestinations())
-		updateDestination(false);
+			updateDestination(false);
 	}
 	
 	public void updateDestination(boolean clear){
@@ -211,6 +211,8 @@ public abstract class Ghost extends Creature{
 		return idForEmptyWayTile;
 	}
 	
-	
+	public void setCurrentMode(int mode){
+		this.currentMode = mode;
+	}
 	
 }

@@ -16,6 +16,11 @@ public class Player extends Creature{
 		direction = Creature.RIGHT;
 	}
 
+	public void resetState(){
+		state = 0;
+		texture = Assets.pacmanDircetions[direction][Math.abs(state)];
+	}
+	
 	@Override
 	public void tick() {
 		if(renderX%Tile.TILEWIDTH == 0 && renderY%Tile.TILEHEIGHT == 0 && newDirectionSet ){

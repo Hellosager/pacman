@@ -12,6 +12,7 @@ import Pacman.creatures.Creature;
 import Pacman.gfx.Assets;
 
 public class GameInformationPanel extends JPanel{
+	private static final int LIFE_COUNT = 3;
 	private JLabel[] lifes; 
 	private JLabel score;
 
@@ -23,7 +24,7 @@ public class GameInformationPanel extends JPanel{
 		JPanel leftPanel = new JPanel(new GridLayout(1,3));
 		leftPanel.setOpaque(false);
 		// LeftPanel mit lifes initalisieren
-		lifes = new JLabel[3];
+		lifes = new JLabel[LIFE_COUNT];
 		for(int i = 0; i < lifes.length; i++){
 			lifes[i] = new JLabel(new ImageIcon(Assets.pacmanDircetions[Creature.RIGHT][0]));
 			leftPanel.add(lifes[i]);

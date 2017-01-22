@@ -60,7 +60,6 @@ public class Level {
 		FULL_WAY_COUNT = fullWayCount;
 	}
 	
-	
 	public void loadLevel(String path){
 		String file = Utils.loadFileAsString(path);
 		String[] tokens = file.split("\\s+");
@@ -281,5 +280,26 @@ public class Level {
 	public boolean coordIsFullWay(int x, int y){
 		return tileMap[x][y] == Tile.FULL_WAY || tileMap[x][y] == Tile.FULL_WAY_RED ||
 				tileMap[x][y] == Tile.FULL_WAY_BLUE || tileMap[x][y] == Tile.FULL_WAY_PINK;
+	}
+	
+	public void resetSpawns(){
+		player.setSpawnX(player.getSpawnX());
+		player.setSpawnY(player.getSpawnY());
+		player.setNewDirection(Creature.RIGHT);
+		player.resetState();
+		
+		for(Ghost g : ghosts){
+			g.setSpawnX(g.getSpawnX());
+			g.setSpawnY(g.getSpawnY());
+		}
+		resetGhostMode();
+		
+	}
+	
+	private void resetGhostMode(){
+		for(Ghost g : ghosts){
+			g.setCurrentMode(Ghost.MODE_SPREAD);
+			g.updateFields();
+		}
 	}
 }
