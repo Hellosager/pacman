@@ -42,17 +42,12 @@ public class Game implements Runnable{
 		canvas.requestFocus();
 		
 		while(levelIsPlayed){
-			for(int number = 3; number > 0; number--){
-				if(!levelIsPlayed)
-					break;
-				renderCountdown(number);
-			}
+			renderCountdown();
 			
-			running = true;
 			while(running){
+				Date start = new Date();	// Messung
 				if(modeTime == null)
 					modeTime = new Date();
-//			long start = System.nanoTime();
 				if(!paused){
 					tick();
 					render();
@@ -62,16 +57,12 @@ public class Game implements Runnable{
 					modeTime = null;
 					level.changeModes();
 				}
-//			long end = System.nanoTime();
-//			System.out.println("Gebraucht für gamelopp: " + (end - start));
-				try {Thread.sleep(50);}catch(InterruptedException e){}				
+				Date end = new Date();
+				long delta = end.getTime() - start.getTime();
+				try {Thread.sleep(50-delta);}catch(InterruptedException e){}				
 			}
 			
-			modeTime = null;
-			level.resetSpawns();
-			try {Thread.sleep(1500);} catch (InterruptedException e) {}
-			if(levelIsPlayed)
-				render();
+			onLifeLost();
 		}
 	}
 	
@@ -160,7 +151,17 @@ public class Game implements Runnable{
 		g.dispose();
 	}
 	
-	public void renderCountdown(int number){
+	private void renderCountdown(){
+		for(int number = 3; number > 0; number--){
+			if(!levelIsPlayed)
+				return;
+			renderNumber(number);
+		}
+		if(levelIsPlayed)
+			running = true;
+	}
+	
+	private void renderNumber(int number){
 		render();
 		Graphics g = canvas.getGraphics();
 		g.setColor(Color.RED);
@@ -186,7 +187,14 @@ public class Game implements Runnable{
 		}
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 	}
-	
+		
+	private void onLifeLost(){
+		modeTime = null;
+		level.resetSpawns();
+		try {Thread.sleep(1500);} catch (InterruptedException e) {}
+		if(levelIsPlayed)
+			render();
+	}
 	
 	public void setLevel(Level level){
 		this.level = level;
