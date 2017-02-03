@@ -27,6 +27,7 @@ public class Game implements Runnable{
 	private Graphics g;
 	private Level level;
 	private GameInformationPanel gi;
+	private int outtime = 50;
 	private Player player;
 	private Date modeTime;
 	private int score, lifeCount;	// score und anzahl der verbleibenden leben
@@ -59,7 +60,7 @@ public class Game implements Runnable{
 				}
 				Date end = new Date();
 				long delta = end.getTime() - start.getTime();
-				try {Thread.sleep(50-delta);}catch(InterruptedException e){}				
+				try {Thread.sleep(outtime-delta);}catch(InterruptedException e){}				
 			}
 			
 			onLifeLost();
@@ -246,5 +247,10 @@ public class Game implements Runnable{
 					levelIsPlayed = false;
 			}
 		}
+	}
+
+	public void manipulateOuttime(int dif){
+		if((outtime + dif) < 55 && (outtime + dif) > 15)
+		outtime += dif;
 	}
 }

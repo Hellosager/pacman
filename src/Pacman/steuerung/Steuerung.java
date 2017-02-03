@@ -55,6 +55,12 @@ public class Steuerung implements KeyListener{
 				pausedAt = new Date();
 			}
 		}
+		if(e.getKeyCode() == KeyEvent.VK_MINUS){
+			game.manipulateOuttime(5);
+		}
+		if(e.getKeyCode() == KeyEvent.VK_PLUS){
+			game.manipulateOuttime(-5);
+		}
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
 				game.stop();
 				new MainMenu(game.getDisplay());
