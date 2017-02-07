@@ -15,12 +15,12 @@ import Pacman.level.Level;
 import Pacman.steuerung.Steuerung;
 import Pacman.tiles.Tile;
 
-public class Game implements Runnable{
+public class Game implements Runnable {
 	private boolean running = false;
 	private boolean levelIsPlayed = false;
 	private boolean paused = false;
 	private int width, height;
-	
+
 	private Display display;
 	private Canvas canvas;
 	private BufferStrategy bs;
@@ -30,68 +30,68 @@ public class Game implements Runnable{
 	private int outtime = 50;
 	private Player player;
 	private Date modeTime;
-	private int score, lifeCount;	// score und anzahl der verbleibenden leben
+	private int score, lifeCount; // score und anzahl der verbleibenden leben
 
 	public Game(Display display) {
 		this.display = display;
 	}
-	
+
 	@Override
 	// Gameloop
 	public void run() {
 		init();
 		canvas.requestFocus();
-		
-		while(levelIsPlayed){
+
+		while (levelIsPlayed) {
 			renderCountdown();
-			
-			while(running){
-				Date start = new Date();	// Messung
-				if(modeTime == null)
+
+			while (running) {
+				Date start = new Date(); // Messung
+				if (modeTime == null)
 					modeTime = new Date();
-				if(!paused){
+				if (!paused) {
 					tick();
 					render();
 					checkCollision();
 				}
-				if((new Date().getTime() - modeTime.getTime()) >= 15000 && !paused){
+				if ((new Date().getTime() - modeTime.getTime()) >= 15000
+						&& !paused) {
 					modeTime = null;
 					level.changeModes();
 				}
 				Date end = new Date();
 				long delta = end.getTime() - start.getTime();
-				try {Thread.sleep(outtime-delta);}catch(InterruptedException e){}				
+				try {
+					Thread.sleep(outtime - delta);
+				} catch (InterruptedException e) {
+				}
 			}
-			
+
 			onLifeLost();
 		}
 	}
-	
-	
-	private void init(){
+
+	private void init() {
 		score = 0;
 		initGhostPaths();
-		
+
 		width = display.getWidth();
-		height = display.getHeight();	
+		height = display.getHeight();
 		display.getFrame().getContentPane().removeAll();
 		display.getFrame().getContentPane().setBackground(null);
 		display.getFrame().setLayout(new BorderLayout());
-		
-		
+
 		gi = new GameInformationPanel();
 		lifeCount = gi.getLifes().length;
-		
-		
+
 		canvas = new Canvas();
 		Dimension dim = new Dimension(width, height);
 		canvas.setPreferredSize(dim);
 		canvas.setMaximumSize(dim);
 		canvas.setMinimumSize(dim);
-//		canvas.setFocusable(false);
+		// canvas.setFocusable(false);
 		canvas.addKeyListener(new Steuerung(level.getPlayer(), this));
 
-		
 		display.getFrame().add(gi, BorderLayout.NORTH);
 		display.getFrame().add(canvas);
 		display.getFrame().pack();
@@ -101,42 +101,44 @@ public class Game implements Runnable{
 	}
 
 	private void initGhostPaths() {
-		for(Ghost g : level.getGhosts()){
+		for (Ghost g : level.getGhosts()) {
 			g.updateFields();
 		}
 	}
 
-	public synchronized void start(){
-		if(levelIsPlayed == false)
+	public synchronized void start() {
+		if (levelIsPlayed == false)
 			levelIsPlayed = true;
 		new Thread(this).start();
 	}
-	
-	public synchronized void stop(){
-		if(levelIsPlayed == true){
+
+	public synchronized void stop() {
+		if (levelIsPlayed == true) {
 			running = false;
 			levelIsPlayed = false;
-		}
-		else return;
+		} else
+			return;
 		try {
 			new Thread(this).join();
-		}catch(InterruptedException e){}
+		} catch (InterruptedException e) {
+		}
 	}
-	
-	public void tick(){
+
+	public void tick() {
 		level.tick();
-		gi.getScore().setText("Score:          " + (score + level.getLevelScore()));
-		if(level.getLevelScore() >= level.getFullWayCount())
-			if(	(player.getRenderX() % Tile.TILEWIDTH == 0) &&
-				(player.getRenderY() % Tile.TILEHEIGHT == 0)){
+		gi.getScore().setText(
+				"Score:          " + (score + level.getLevelScore()));
+		if (level.getLevelScore() >= level.getFullWayCount())
+			if ((player.getRenderX() % Tile.TILEWIDTH == 0)
+					&& (player.getRenderY() % Tile.TILEHEIGHT == 0)) {
 				running = false;
 				levelIsPlayed = false;
 			}
 	}
-	
-	public void render(){
+
+	public void render() {
 		bs = canvas.getBufferStrategy();
-		if(bs == null){
+		if (bs == null) {
 			canvas.createBufferStrategy(3);
 			bs = canvas.getBufferStrategy();
 		}
@@ -144,113 +146,130 @@ public class Game implements Runnable{
 		g.clearRect(0, 0, width, height);
 		// Draw
 		// Bei 600x 600 : xMax = 550, yMax = 575
-//		Tile.tileTextures[0].render(g, 0, 0);
+		// Tile.tileTextures[0].render(g, 0, 0);
 		// Muss Level rendern, Player, 3 Ghosts
 		level.render(g);
-		
+
 		bs.show();
 		g.dispose();
 	}
-	
-	private void renderCountdown(){
-		for(int number = 3; number > 0; number--){
-			if(!levelIsPlayed)
+
+	private void renderCountdown() {
+		for (int number = 3; number > 0; number--) {
+			if (!levelIsPlayed)
 				return;
 			renderNumber(number);
 		}
-		if(levelIsPlayed)
+		if (levelIsPlayed)
 			running = true;
 	}
-	
-	private void renderNumber(int number){
+
+	private void renderNumber(int number) {
 		render();
 		Graphics g = canvas.getGraphics();
 		g.setColor(Color.RED);
-		switch(number){
+		switch (number) {
 		case 3:
-			g.fillRect(9*Tile.TILEWIDTH, 7*Tile.TILEHEIGHT, 7*Tile.TILEWIDTH , Tile.TILEHEIGHT);
-			g.fillRect(10*Tile.TILEWIDTH, 11*Tile.TILEHEIGHT, 6*Tile.TILEWIDTH , Tile.TILEHEIGHT);
-			g.fillRect(9*Tile.TILEWIDTH, 15*Tile.TILEHEIGHT, 7*Tile.TILEWIDTH , Tile.TILEHEIGHT);
-			g.fillRect(15*Tile.TILEWIDTH, 7*Tile.TILEHEIGHT, Tile.TILEWIDTH , 9*Tile.TILEHEIGHT);
+			g.fillRect(9 * Tile.TILEWIDTH, 7 * Tile.TILEHEIGHT,
+					7 * Tile.TILEWIDTH, Tile.TILEHEIGHT);
+			g.fillRect(10 * Tile.TILEWIDTH, 11 * Tile.TILEHEIGHT,
+					6 * Tile.TILEWIDTH, Tile.TILEHEIGHT);
+			g.fillRect(9 * Tile.TILEWIDTH, 15 * Tile.TILEHEIGHT,
+					7 * Tile.TILEWIDTH, Tile.TILEHEIGHT);
+			g.fillRect(15 * Tile.TILEWIDTH, 7 * Tile.TILEHEIGHT,
+					Tile.TILEWIDTH, 9 * Tile.TILEHEIGHT);
 			break;
-			
+
 		case 2:
-			g.fillRect(9*Tile.TILEWIDTH, 7*Tile.TILEHEIGHT, 7*Tile.TILEWIDTH , Tile.TILEHEIGHT);
-			g.fillRect(15*Tile.TILEWIDTH, 8*Tile.TILEHEIGHT, Tile.TILEWIDTH, 3*Tile.TILEHEIGHT);
-			g.fillRect(9*Tile.TILEWIDTH, 11*Tile.TILEHEIGHT, 7*Tile.TILEWIDTH , Tile.TILEHEIGHT);
-			g.fillRect(9*Tile.TILEWIDTH, 12*Tile.TILEHEIGHT, Tile.TILEWIDTH , 3*Tile.TILEHEIGHT);
-			g.fillRect(9*Tile.TILEWIDTH, 15*Tile.TILEHEIGHT, 7*Tile.TILEWIDTH , Tile.TILEHEIGHT);
+			g.fillRect(9 * Tile.TILEWIDTH, 7 * Tile.TILEHEIGHT,
+					7 * Tile.TILEWIDTH, Tile.TILEHEIGHT);
+			g.fillRect(15 * Tile.TILEWIDTH, 8 * Tile.TILEHEIGHT,
+					Tile.TILEWIDTH, 3 * Tile.TILEHEIGHT);
+			g.fillRect(9 * Tile.TILEWIDTH, 11 * Tile.TILEHEIGHT,
+					7 * Tile.TILEWIDTH, Tile.TILEHEIGHT);
+			g.fillRect(9 * Tile.TILEWIDTH, 12 * Tile.TILEHEIGHT,
+					Tile.TILEWIDTH, 3 * Tile.TILEHEIGHT);
+			g.fillRect(9 * Tile.TILEWIDTH, 15 * Tile.TILEHEIGHT,
+					7 * Tile.TILEWIDTH, Tile.TILEHEIGHT);
 			break;
-			
-		case 1: 
-			g.fillRect(15*Tile.TILEWIDTH, 7*Tile.TILEHEIGHT, Tile.TILEWIDTH , 9*Tile.TILEHEIGHT);
+
+		case 1:
+			g.fillRect(15 * Tile.TILEWIDTH, 7 * Tile.TILEHEIGHT,
+					Tile.TILEWIDTH, 9 * Tile.TILEHEIGHT);
 			break;
 		}
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
-		
-	private void onLifeLost(){
+
+	private void onLifeLost() {
 		modeTime = null;
 		level.resetSpawns();
-		try {Thread.sleep(1500);} catch (InterruptedException e) {}
-		if(levelIsPlayed)
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+		}
+		if (levelIsPlayed)
 			render();
 	}
-	
-	public void setLevel(Level level){
+
+	public void setLevel(Level level) {
 		this.level = level;
 		this.player = level.getPlayer();
 	}
-	
-	public Level getLevel(){
+
+	public Level getLevel() {
 		return level;
 	}
-	
-	public void setPaused(boolean paused){
+
+	public void setPaused(boolean paused) {
 		this.paused = paused;
 	}
-	
-	public boolean isPaused(){
+
+	public boolean isPaused() {
 		return paused;
 	}
-	
-	public Display getDisplay(){
+
+	public Display getDisplay() {
 		return display;
 	}
-	
-	public Date getModeTime(){
+
+	public Date getModeTime() {
 		return modeTime;
 	}
-	
-	public void setModeTime(Date modeTime){
+
+	public void setModeTime(Date modeTime) {
 		this.modeTime = modeTime;
 	}
-	
-	private void loseLife(){
-		if(lifeCount != 0)
-			gi.getLifes()[lifeCount-1].setIcon(null);
+
+	private void loseLife() {
+		if (lifeCount != 0)
+			gi.getLifes()[lifeCount - 1].setIcon(null);
 		lifeCount--;
 	}
-	
-	public boolean isRunning(){
+
+	public boolean isRunning() {
 		return running;
 	}
-	
-	private void checkCollision(){
+
+	private void checkCollision() {
 		Player p = level.getPlayer();
 		Ghost[] ghosts = level.getGhosts();
-		for(Ghost g : ghosts){
-			if(p.getHitbox().intersects(g.getHitbox())){
+		for (Ghost g : ghosts) {
+			if (p.getHitbox().intersects(g.getHitbox())) {
 				loseLife();
 				running = false;
-				if(lifeCount < 0)
+				if (lifeCount < 0)
 					levelIsPlayed = false;
 			}
 		}
 	}
 
-	public void manipulateOuttime(int dif){
-		if((outtime + dif) < 55 && (outtime + dif) > 15)
-		outtime += dif;
+	public void manipulateOuttime(int dif) {
+		if ((outtime + dif) < 55 && (outtime + dif) > 15)
+			outtime += dif;
 	}
 }

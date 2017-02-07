@@ -1,9 +1,11 @@
 package Pacman;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Utils {
 
@@ -33,6 +35,35 @@ public class Utils {
 			e.printStackTrace();
 			return 0;
 		}		
+	}
+	
+	public static ArrayList<String> getPrimaryLevel(){
+		InputStream is = Utils.class.getClassLoader().getResourceAsStream("level/levelnames.txt");
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		
+		ArrayList<String> fileNamesList = new ArrayList<String>();
+		
+		try {
+			String line;
+			while((line = br.readLine()) != null){
+				fileNamesList.add(line);
+			}
+		} catch (IOException e) {e.printStackTrace();}
+		
+		return fileNamesList;
+	}
+	
+	public static ArrayList<String> getAllLevel(){
+		ArrayList<String> fileNamesList = getPrimaryLevel();
+		
+		File f = new File("Level");
+		if(f.exists()){
+			for(int i = 0; i < f.listFiles().length; i++)
+				fileNamesList.add(new String(f.listFiles()[i].getName()));
+		}
+		
+		return fileNamesList;
+		
 	}
 	
 }

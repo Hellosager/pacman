@@ -5,18 +5,22 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Pacman.Utils;
 import Pacman.input.LevelSelectListener;
 import Pacman.level.Level;
 
 public class Levelselect {
 	
-	private static final int normalLevelCount = 5;
+	private static final int normalLevelCount = Utils.getPrimaryLevel().size();
+	
+	private ArrayList<String> fileNames;
 	
 	private Display display;
 	private int height, width;
@@ -29,6 +33,7 @@ public class Levelselect {
 		this.display = display;
 		this.height = display.getHeight();
 		this.width = display.getWidth();
+		fileNames = Utils.getAllLevel();
 		
 		initGui();
 	}
@@ -40,7 +45,6 @@ public class Levelselect {
 		display.getFrame().setLayout(new BorderLayout());
 		display.getFrame().setLocation(display.getFrame().getX(),display.getFrame().getY()-30);
 	
-//		levelPreview = new JLabel(new ImageIcon(ImageLoader.loadImage("/images/levelPreviews/level1preview.png")));
 		previewCanvas = new PreviewCanvas(new Level("level/level1.txt"));
 		Dimension dim = new Dimension(width, height);
 		previewCanvas.setPreferredSize(dim);
@@ -50,16 +54,15 @@ public class Levelselect {
 		
 		levelSelector = new JComboBox();
 		levelSelector.setActionCommand("select");
-		// Hier soll die Anzahl der files in res/level ausgelesen werden
-		for(int i = 0; i < normalLevelCount; i++)	// hardcoded alle norameln level
-			levelSelector.addItem("Level " + (i+1));
 
-		// Dann alle eigenen Level
-		File f = new File("Level");
-		if(f.exists())
-		for(int i = 0; i < f.listFiles().length; i++){
-			String s = f.listFiles()[i].getName();
-			levelSelector.addItem("Custom Level: " + s.substring(0, s.lastIndexOf(".")));
+		// Level Auswahlmöglichkeiten, erst die normalen Level, dann die Customs
+		for(int i = 0; i < fileNames.size(); i++){
+			if(i < normalLevelCount)
+				levelSelector.addItem("Level " + (i+1));
+			else{
+				String s = fileNames.get(i);
+				levelSelector.addItem("Custom Level: " + s.substring(0, s.lastIndexOf(".")));
+			}
 		}
 		
 		levelSelector.addActionListener(new LevelSelectListener(this));
@@ -103,5 +106,9 @@ public class Levelselect {
 	
 	public PreviewCanvas getPreviewCanvas(){
 		return previewCanvas;
+	}
+	
+	public ArrayList<String> getFileNames(){
+		return fileNames;
 	}
 }
