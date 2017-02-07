@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
