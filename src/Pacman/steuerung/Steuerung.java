@@ -21,25 +21,25 @@ public class Steuerung implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_W && !game.isPaused()){
+		if((e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_UP) && !game.isPaused()){
 			if(game.isRunning()){
 				player.setNewDirectionSet(true);
 				player.setNewDirection(Creature.UP);				
 			}
 		}
-		if(e.getKeyCode() == KeyEvent.VK_D && !game.isPaused()){
+		if((e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT) && !game.isPaused()){
 			if(game.isRunning()){
 				player.setNewDirectionSet(true);
 				player.setNewDirection(Creature.RIGHT);
 			}
 		}
-		if(e.getKeyCode() == KeyEvent.VK_S && !game.isPaused()){
+		if((e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN) && !game.isPaused()){
 			if(game.isRunning()){
 				player.setNewDirectionSet(true);
 				player.setNewDirection(Creature.DOWN);				
 			}
 		}
-		if(e.getKeyCode() == KeyEvent.VK_A && !game.isPaused()){
+		if((e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT) && !game.isPaused()){
 			if(game.isRunning()){
 				player.setNewDirectionSet(true);
 				player.setNewDirection(Creature.LEFT);
