@@ -198,32 +198,40 @@ public class Level {
 		return FULL_WAY_COUNT;
 	}
 	
-	public boolean isValidToPlay(JFrame frame){
-		if(spawnsAreValid(frame) && allTilesAreSet(frame) && isFinishable(frame))
+	public boolean isValidToPlay(){
+		if(spawnsAreValid() && allTilesAreSet() && isFinishable())
 			return true;
 		return false;
 	}
 	
-	private boolean spawnsAreValid(JFrame frame){
+	public void showFailureInfo(JFrame frame){
+		if(!spawnsAreValid())
+			JOptionPane.showMessageDialog(frame, "Spawns are not set properly");
+		else if(!allTilesAreSet())
+			JOptionPane.showMessageDialog(frame, "There are tiles that are not set");
+		else if(!isFinishable())
+			JOptionPane.showMessageDialog(frame, "There are unreachable waytiles");
+
+	}
+	
+	private boolean spawnsAreValid(){
 		for(int i = 0; i < ghosts.length; i++)
 			if((ghosts[i].getSpawnX() == 0) || (ghosts[i].getSpawnY() == 0)){	// Wenn irgendeine creature 0,0 koords hat == false
-				JOptionPane.showMessageDialog(frame, "Spawns are not set properly");
 				return false;
 			}
 		return true;		
 	}
 
-	private boolean allTilesAreSet(JFrame frame){
+	private boolean allTilesAreSet(){
 		for(int x = 0; x < tileMap.length; x++)	// Wenn irgendein tile == 3 ist dann false
 			for(int y = 0; y < tileMap[x].length; y++)
 				if(tileMap[x][y] == 3){
-					JOptionPane.showMessageDialog(frame, "There are tiles that are not set");
 					return false;
 				}
 		return true;
 	}
 
-	private boolean isFinishable(JFrame frame){
+	private boolean isFinishable(){
 		Dijkstra pathfinder = new Dijkstra(this);
 		
 		for(int x = 0; x < tileMap.length; x++)	// gehe x durch
@@ -232,7 +240,6 @@ public class Level {
 					pathfinder.findPath(ghosts[0].getSpawnX(), ghosts[0].getSpawnY(), x, y);
 				
 		if(!pathfinder.allNodesAreReachable()){
-			JOptionPane.showMessageDialog(frame, "There are unreachable waytiles");
 			return false;
 		}
 		return true;

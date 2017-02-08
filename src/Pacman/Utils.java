@@ -11,7 +11,6 @@ public class Utils {
 
 	public static String loadFileAsString(String path){
 		StringBuilder builder = new StringBuilder();
-		
 		try{
 			InputStream is = Utils.class.getClassLoader().getResourceAsStream(path);
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -46,7 +45,7 @@ public class Utils {
 		try {
 			String line;
 			while((line = br.readLine()) != null){
-				fileNamesList.add(line);
+				fileNamesList.add("level/" + line);
 			}
 		} catch (IOException e) {e.printStackTrace();}
 		
@@ -59,7 +58,7 @@ public class Utils {
 		File f = new File("Level");
 		if(f.exists()){
 			for(int i = 0; i < f.listFiles().length; i++)
-				fileNamesList.add(new String(f.listFiles()[i].getName()));
+				fileNamesList.add("Level/" + f.listFiles()[i].getName());
 		}
 		
 		return fileNamesList;

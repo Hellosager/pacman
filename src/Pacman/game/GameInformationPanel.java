@@ -14,7 +14,7 @@ import Pacman.gfx.Assets;
 public class GameInformationPanel extends JPanel{
 	private static final int LIFE_COUNT = 3;
 	private JLabel[] lifes; 
-	private JLabel score;
+	private JLabel scoreLabel;
 
 	public GameInformationPanel(){
 		this.setLayout(new GridLayout(1, 2));
@@ -33,9 +33,9 @@ public class GameInformationPanel extends JPanel{
 		// Rightpanel initalisieren
 		JPanel rightPanel = new JPanel();
 		rightPanel.setOpaque(false);
-		score = new JLabel("Score:          ");		//10 Whitespaces
-		score.setForeground(Color.ORANGE);
-		rightPanel.add(score);
+		scoreLabel = new JLabel("Score:          " + "0");		//10 Whitespaces
+		scoreLabel.setForeground(Color.ORANGE);
+		rightPanel.add(scoreLabel);
 		
 		
 		this.add(leftPanel);
@@ -46,7 +46,7 @@ public class GameInformationPanel extends JPanel{
 		return lifes;
 	}
 	
-	public JLabel getScore(){
-		return score;
+	public JLabel getScoreLabel(){
+		return scoreLabel;
 	}
 }

@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 import java.util.Date;
 
 import Pacman.creatures.Ghost;
@@ -18,10 +19,15 @@ import Pacman.tiles.Tile;
 public class Game implements Runnable {
 	private boolean running = false;
 	private boolean levelIsPlayed = false;
+	private boolean playing = false;
 	private boolean paused = false;
 	private int width, height;
 
 	private Display display;
+	private int levelIndex;
+	private ArrayList<String> allLevel;
+	
+	
 	private Canvas canvas;
 	private BufferStrategy bs;
 	private Graphics g;
@@ -32,8 +38,13 @@ public class Game implements Runnable {
 	private Date modeTime;
 	private int score, lifeCount; // score und anzahl der verbleibenden leben
 
-	public Game(Display display) {
+	public Game(Display display, int levelIndex, ArrayList<String> allLevel) {
 		this.display = display;
+		this.levelIndex = levelIndex;
+		this.allLevel = allLevel;
+		gi = new GameInformationPanel();
+		lifeCount = gi.getLifes().length;
+		score = 0;
 	}
 
 	@Override
@@ -42,37 +53,44 @@ public class Game implements Runnable {
 		init();
 		canvas.requestFocus();
 
-		while (levelIsPlayed) {
-			renderCountdown();
-
-			while (running) {
-				Date start = new Date(); // Messung
-				if (modeTime == null)
-					modeTime = new Date();
-				if (!paused) {
-					tick();
-					render();
-					checkCollision();
+			while (levelIsPlayed) {
+				renderCountdown();
+	
+				while (running) {
+					Date start = new Date(); // Messung
+					if (modeTime == null)
+						modeTime = new Date();
+					if (!paused) {
+						tick();
+						render();
+						checkCollision();
+					}
+					if ((new Date().getTime() - modeTime.getTime()) >= 15000
+							&& !paused) {
+						modeTime = null;
+						level.changeModes();
+					}
+					Date end = new Date();
+					long delta = end.getTime() - start.getTime();
+					try {
+						if((outtime - delta) >= 0)
+							Thread.sleep(outtime - delta);
+						else
+							Thread.sleep(outtime);
+					} catch (InterruptedException e) {
+					}
 				}
-				if ((new Date().getTime() - modeTime.getTime()) >= 15000
-						&& !paused) {
-					modeTime = null;
-					level.changeModes();
-				}
-				Date end = new Date();
-				long delta = end.getTime() - start.getTime();
-				try {
-					Thread.sleep(outtime - delta);
-				} catch (InterruptedException e) {
-				}
+	
+				onLifeLost();
 			}
-
-			onLifeLost();
-		}
+			
+			// Level hört auf Tod oder abgeschlossen
+			if(playing)
+				levelOver();
 	}
 
 	private void init() {
-		score = 0;
+//		score = 0;
 		initGhostPaths();
 
 		width = display.getWidth();
@@ -81,8 +99,6 @@ public class Game implements Runnable {
 		display.getFrame().getContentPane().setBackground(null);
 		display.getFrame().setLayout(new BorderLayout());
 
-		gi = new GameInformationPanel();
-		lifeCount = gi.getLifes().length;
 
 		canvas = new Canvas();
 		Dimension dim = new Dimension(width, height);
@@ -107,12 +123,16 @@ public class Game implements Runnable {
 	}
 
 	public synchronized void start() {
+		if(!playing)
+			playing = true;
 		if (levelIsPlayed == false)
 			levelIsPlayed = true;
 		new Thread(this).start();
 	}
 
 	public synchronized void stop() {
+		if(playing)
+			playing = false;
 		if (levelIsPlayed == true) {
 			running = false;
 			levelIsPlayed = false;
@@ -126,8 +146,7 @@ public class Game implements Runnable {
 
 	public void tick() {
 		level.tick();
-		gi.getScore().setText(
-				"Score:          " + (score + level.getLevelScore()));
+		gi.getScoreLabel().setText("Score:          " + (score + level.getLevelScore()));
 		if (level.getLevelScore() >= level.getFullWayCount())
 			if ((player.getRenderX() % Tile.TILEWIDTH == 0)
 					&& (player.getRenderY() % Tile.TILEHEIGHT == 0)) {
@@ -272,4 +291,19 @@ public class Game implements Runnable {
 		if ((outtime + dif) < 55 && (outtime + dif) > 15)
 			outtime += dif;
 	}
+	
+	private void levelOver(){
+		if(lifeCount == -1){
+			System.out.println("Game Over");
+		}else{
+			score += level.getLevelScore();
+			do{
+				if(++levelIndex == allLevel.size())
+					levelIndex = 0;
+				level = new Level(allLevel.get(levelIndex));				
+			}while(!level.isValidToPlay());
+			start();
+		}	
+	}
+	
 }

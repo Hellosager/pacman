@@ -18,8 +18,7 @@ public class LevelSelectListener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String levelDatei = ((ls.getLevelSelector().getSelectedIndex())) < (ls.getNormalLevelCount()) ? "level/" : "Level/";
-		levelDatei = levelDatei +  ls.getFileNames().get(ls.getLevelSelector().getSelectedIndex());
+		String levelDatei =ls.getFileNames().get(ls.getLevelSelector().getSelectedIndex());
 		switch(e.getActionCommand()){
 			case "select":
 				previewLevel = new Level(levelDatei);
@@ -32,11 +31,13 @@ public class LevelSelectListener implements ActionListener{
 				break;
 			
 			default:	// Play
-				Game g = new Game(ls.getDisplay());
+				Game g = new Game(ls.getDisplay(), ls.getLevelSelector().getSelectedIndex(), ls.getFileNames());
 				Level level = new Level(levelDatei);
-				if(level.isValidToPlay(ls.getDisplay().getFrame())){
+				if(level.isValidToPlay()){
 					g.setLevel(level);
 					g.start();
+				}else{
+					level.showFailureInfo(ls.getDisplay().getFrame());
 				}
 				break;
 		}
