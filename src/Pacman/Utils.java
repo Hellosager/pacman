@@ -1,15 +1,19 @@
 package Pacman;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class Utils {
 
 	public static String loadFileAsString(String path){
+		System.out.println(path);
 		StringBuilder builder = new StringBuilder();
 		try{
 			InputStream is = Utils.class.getClassLoader().getResourceAsStream(path);
@@ -63,6 +67,26 @@ public class Utils {
 		
 		return fileNamesList;
 		
+	}
+	
+	public static void createReadme(){
+		try{
+			File readMe = new File("readme.txt");
+			if(!readMe.exists()){
+				InputStream is = Utils.class.getClassLoader().getResourceAsStream("readme.txt");
+				BufferedReader br = new BufferedReader(new InputStreamReader(is));
+				BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(readMe)));
+				String line;
+				while((line = br.readLine()) != null){
+					out.write(line);
+					out.newLine();
+				}
+				br.close();
+				out.close();
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 	
 }

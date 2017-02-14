@@ -93,7 +93,6 @@ public class Level {
 //		if(!levelFile.exists())
 			try {
 				File levelFile = new File(DIR_NAME + "/" + levelName + ".txt");
-				System.out.println(levelFile);
 				levelFile.createNewFile();
 				BufferedWriter writer = new BufferedWriter(new FileWriter(levelFile));
 				writer.write(width + " " + height + "\n");
@@ -113,9 +112,6 @@ public class Level {
 				writer.flush();
 				writer.close();
 			} catch (IOException e) {	e.printStackTrace();	}
-		
-		
-		System.out.println("speichern vollendet");
 	}
 	
 	public Tile getTile(int x, int y){
