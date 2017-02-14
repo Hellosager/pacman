@@ -17,8 +17,8 @@ ESC = leave game to menu, score will be lost<br>
 (in gameover animation you can press esc to skip animation WITHOUT loosing the score)<br>
 <br>
 Cheats<br>
-+ = increase tickspeed<br>
-- = reduce tickspeed<br>
+plus = increase tickspeed<br>
+minus = reduce tickspeed<br>
 x = show target fields of ghosts<br>
 <br>
 <br>
@@ -26,9 +26,9 @@ x = show target fields of ghosts<br>
 Editor:<br>
 You can only play your own created level if it is valid.<br>
 That means your level need to:<br>
-- have all spawns set<br>
-- have no white tiles left<br>
-- have no eatables surrounded by walls<br>
+* have all spawns set<br>
+* have no white tiles left<br>
+* have no eatables surrounded by walls<br>
 <br>
 <br>
 You cannot chose a name for your level that is already taken.<br>
