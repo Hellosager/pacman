@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class Utils {
 
 	public static String loadFileAsString(String path){
-		System.out.println(path);
 		StringBuilder builder = new StringBuilder();
 		try{
 			InputStream is = Utils.class.getClassLoader().getResourceAsStream(path);
