@@ -21,6 +21,7 @@ public class Game implements Runnable {
 	private boolean levelIsPlayed = false;
 	private boolean playing = false;
 	private boolean paused = false;
+	private boolean escapePressed = false;
 	private int width, height;
 
 	private Display display;
@@ -43,7 +44,7 @@ public class Game implements Runnable {
 		this.levelIndex = levelIndex;
 		this.allLevel = allLevel;
 		gi = new GameInformationPanel();
-		lifeCount = gi.getLifes().length;
+		lifeCount = 3;
 		score = 0;
 	}
 
@@ -80,8 +81,8 @@ public class Game implements Runnable {
 					} catch (InterruptedException e) {
 					}
 				}
-	
-				onLifeLost();
+				if(levelIsPlayed)
+					onLifeLost();
 			}
 			
 			// Level hört auf Tod oder abgeschlossen
@@ -294,7 +295,8 @@ public class Game implements Runnable {
 	
 	private void levelOver(){
 		if(lifeCount == -1){
-			System.out.println("Game Over");
+			score += level.getLevelScore();
+			new GameOverThread(this, level).run();
 		}else{
 			score += level.getLevelScore();
 			do{
@@ -304,6 +306,22 @@ public class Game implements Runnable {
 			}while(!level.isValidToPlay());
 			start();
 		}	
+	}
+	
+	public int getScore(){
+		return score;
+	}
+	
+	public boolean escapeHasBeenPressed(){
+		return escapePressed;
+	}
+	
+	public void setEscapePressed(boolean ep){
+		escapePressed = ep;
+	}
+	
+	public boolean levelIsPlayed(){
+		return levelIsPlayed;
 	}
 	
 }

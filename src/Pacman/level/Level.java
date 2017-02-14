@@ -135,7 +135,7 @@ public class Level {
 		// Creatures rendern
 		for(int i = 0; i < ghosts.length; i++)
 			if(ghosts[i].isRenderable())
-			ghosts[i].render(g);
+		ghosts[i].render(g);
 		if(player.isRenderable())
 			player.render(g);
 	}

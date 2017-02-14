@@ -8,6 +8,7 @@ import Pacman.creatures.Creature;
 import Pacman.creatures.Player;
 import Pacman.game.Game;
 import Pacman.gui.MainMenu;
+import Pacman.highscore.Highscore;
 
 public class Steuerung implements KeyListener{
 	private Player player;
@@ -62,8 +63,14 @@ public class Steuerung implements KeyListener{
 			game.manipulateOuttime(-5);
 		}
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+			if(game.levelIsPlayed()){
 				game.stop();
 				new MainMenu(game.getDisplay());
+			}
+			else{
+				game.setEscapePressed(true);
+				new Highscore(game.getDisplay(), game);
+			}
 		}
 	}
 

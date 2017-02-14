@@ -10,6 +10,7 @@ import Pacman.game.Game;
 import Pacman.gui.Display;
 import Pacman.gui.Levelselect;
 import Pacman.gui.MenuButton;
+import Pacman.highscore.Highscore;
 import Pacman.level.Level;
 
 public class MouseInput implements MouseListener{
@@ -32,7 +33,8 @@ public class MouseInput implements MouseListener{
 			case "play": 
 				new Levelselect(display);
 				break;
-			case "score": 
+			case "score":
+				new Highscore(display);
 				break;
 			case "editor": 
 				new Editor(display).start();
