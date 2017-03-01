@@ -84,6 +84,22 @@ public class Dijkstra {
 	return true;
 	}
 	
+	public void setDefaultKnotenMap(){
+		int widht = 24;	// breite = die breite die level hat bzw tilemap
+		int height = 24;	// höhe auch
+		Knoten[][] tileMapAlsKnoten = new Knoten[widht][height];	// KnotenArray genau so groß wie Tilemap
+		for(int x = 0; x < widht; x++){	// Kopierschleifen für Array, initialsiert alle Knoten
+			for(int y = 0; y < height; y++){
+				if(x == 0 || x == 23 || y == 0 || y == 23)
+					tileMapAlsKnoten[x][y] = new Knoten(x, y, true);	// Übergib Koordinaten und ob solid
+				else
+					tileMapAlsKnoten[x][y] = new Knoten(x, y, false);	// Übergib Koordinaten und ob solid
+			}
+		}
+		
+		this.tileMapAlsKnoten = tileMapAlsKnoten;
+	}
+	
 	public Knoten[][] getTileMapAlsKnoten(){
 		return tileMapAlsKnoten;
 	}

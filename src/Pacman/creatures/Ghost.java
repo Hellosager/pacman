@@ -59,7 +59,6 @@ public abstract class Ghost extends Creature{
 	}
 	
 	public void updateDestination(boolean clear){
-//		if(level.showDestinations()){
 			if(!clear){
 				level.getTileMap()[currentDestination.x][currentDestination.y] = 
 					level.coordIsFullWay(currentDestination.x, currentDestination.y) ? idForFullWayTile : idForEmptyWayTile; 
@@ -67,7 +66,6 @@ public abstract class Ghost extends Creature{
 				level.getTileMap()[currentDestination.x][currentDestination.y] = 
 						level.coordIsFullWay(currentDestination.x, currentDestination.y) ? Tile.FULL_WAY : Tile.EMPTY_WAY; 
 			}
-//		}
 	}
 	
 	abstract void updateDirection();
@@ -92,6 +90,8 @@ public abstract class Ghost extends Creature{
 	// FEAR MODE
 	protected void updateFieldsFear(){
 		currentDestination = corners[new Random().nextInt(corners.length)];
+		if(knotenMap[currentDestination.x][currentDestination.y].isSolid())
+			currentDestination = getClosestReachableNode(); // Testen
 		Dijkstra dj = new Dijkstra(level);
 		dj.findPath(currentDestination.x, currentDestination.y, this.getX(), this.getY());
 		knotenMap = dj.getTileMapAlsKnoten();
@@ -189,6 +189,18 @@ public abstract class Ghost extends Creature{
 				break;
 		}
 		return new Point(x, y);
+	}
+	
+	private Point getClosestReachableNode(){
+		Dijkstra d = new Dijkstra(level);
+		d.setDefaultKnotenMap();
+		d.findPath(this.getX(), this.getY(), currentDestination.x, currentDestination.y);
+		Knoten[][] knotenMap = d.getTileMapAlsKnoten();
+		Knoten k = knotenMap[currentDestination.x][currentDestination.y];
+		while(this.knotenMap[k.getX()][k.getY()].isSolid()){
+			k = k.getVorgänger();
+		}
+		return new Point(k.getX(), k.getY());
 	}
 
 	public void changeMode() {
