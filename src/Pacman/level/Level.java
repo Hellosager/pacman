@@ -241,6 +241,12 @@ public class Level {
 		return true;
 	}
 	
+//	private boolean necessaryWallsAreSet(){
+//			for(int x = 0; x <= tileMap.length; x+=23)
+//				for(int y = 0; y <= tileMap[x].length; y++)
+//					if(tileMap[x][y] ==)
+//	}
+	
 	public boolean isSpawn(int x, int y, Creature c){
 		if(c != player && (player.getSpawnX() == x) && (player.getSpawnY() == y))
 			return true;
