@@ -246,7 +246,11 @@ public class Level {
 	private boolean necessaryWallsAreSet(){
 //		System.out.println("necassrayWalls");
 			for(int x = 0; x <= tileMap.length; x+=23)
-				for(int y = 0; y <= tileMap[x].length; y++)
+				for(int y = 0; y < tileMap[x].length; y++)
+					if(tileMap[x][y] != 0)
+						return false;
+			for(int y = 0; y <= tileMap.length; y+=23)
+				for(int x = 0; x < tileMap[y].length; x++)
 					if(tileMap[x][y] != 0)
 						return false;
 			return true;
