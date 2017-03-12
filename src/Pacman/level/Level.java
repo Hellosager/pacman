@@ -195,7 +195,7 @@ public class Level {
 	}
 	
 	public boolean isValidToPlay(){
-		if(spawnsAreValid() && allTilesAreSet() && isFinishable())
+		if(spawnsAreValid() && allTilesAreSet() && necessaryWallsAreSet() && isFinishable() )
 			return true;
 		return false;
 	}
@@ -205,6 +205,8 @@ public class Level {
 			JOptionPane.showMessageDialog(frame, "Spawns are not set properly");
 		else if(!allTilesAreSet())
 			JOptionPane.showMessageDialog(frame, "There are tiles that are not set");
+		else if(!necessaryWallsAreSet())
+			JOptionPane.showMessageDialog(frame, "Edge Walls are not set. You shouldn't change the files ;)");
 		else if(!isFinishable())
 			JOptionPane.showMessageDialog(frame, "There are unreachable waytiles");
 
@@ -241,11 +243,14 @@ public class Level {
 		return true;
 	}
 	
-//	private boolean necessaryWallsAreSet(){
-//			for(int x = 0; x <= tileMap.length; x+=23)
-//				for(int y = 0; y <= tileMap[x].length; y++)
-//					if(tileMap[x][y] ==)
-//	}
+	private boolean necessaryWallsAreSet(){
+//		System.out.println("necassrayWalls");
+			for(int x = 0; x <= tileMap.length; x+=23)
+				for(int y = 0; y <= tileMap[x].length; y++)
+					if(tileMap[x][y] != 0)
+						return false;
+			return true;
+	}
 	
 	public boolean isSpawn(int x, int y, Creature c){
 		if(c != player && (player.getSpawnX() == x) && (player.getSpawnY() == y))
