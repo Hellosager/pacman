@@ -24,8 +24,11 @@ public class AnimationPanel extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		for(Animation a : animations)
-			g.drawImage(a.getTexture(), a.getX(), a.getY(), null);
+		for(Animation a : animations){
+			try{
+				g.drawImage(a.getTexture(), a.getX(), a.getY(), null);							
+			}catch(Exception e){};
+		}
 	}
 	
 	public Animation[] getAnimations(){
