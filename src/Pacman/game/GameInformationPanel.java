@@ -26,7 +26,7 @@ public class GameInformationPanel extends JPanel{
 		// LeftPanel mit lifes initalisieren
 		lifes = new JLabel[LIFE_COUNT];
 		for(int i = 0; i < lifes.length; i++){
-			lifes[i] = new JLabel(new ImageIcon(Assets.pacmanDircetions[Creature.RIGHT][0]));
+			lifes[i] = new JLabel(new ImageIcon(Assets.pacmanDirections[Creature.RIGHT][0]));
 			leftPanel.add(lifes[i]);
 		}
 

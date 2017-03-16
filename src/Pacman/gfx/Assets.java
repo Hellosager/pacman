@@ -10,7 +10,7 @@ public class Assets {
 	public static BufferedImage wall, fullWay, emptyWay, raster;
 	public static BufferedImage fullWayRed, fullWayPink, fullWayBlue, emptyWayRed, emptyWayBlue, emptyWayPink;
 	public static BufferedImage[] inky, blinky, pinky;
-	public static BufferedImage[][] pacmanDircetions;
+	public static BufferedImage[][] pacmanDirections;
 	
 	public static void initAssets(){
 		title = ImageLoader.loadImage("/images/title.png");
@@ -51,9 +51,9 @@ public class Assets {
 //		pacman = ImageLoader.loadImage("/images/pacman.png");
 		
 		// Animations for pacman
-		pacmanDircetions = new BufferedImage[4][6];	// 4 richtungen mit je 6 Bildern
-		for(int direction = 0; direction < pacmanDircetions.length; direction++)
-			for(int pic = 0; pic < pacmanDircetions[direction].length; pic++){
+		pacmanDirections = new BufferedImage[4][6];	// 4 richtungen mit je 6 Bildern
+		for(int direction = 0; direction < pacmanDirections.length; direction++)
+			for(int pic = 0; pic < pacmanDirections[direction].length; pic++){
 				String path = "";
 				switch(direction){
 				case Creature.UP: path = "/images/PacmanAnimations/PacmanUp/" + pic + ".png"; break; // up
@@ -61,7 +61,7 @@ public class Assets {
 				case Creature.DOWN: path = "/images/PacmanAnimations/PacmanDown/" + pic + ".png"; break; // down
 				case Creature.LEFT: path = "/images/PacmanAnimations/PacmanLeft/" + pic + ".png"; break; // left
 				}
-				pacmanDircetions[direction][pic] = ImageLoader.loadImage(path);
+				pacmanDirections[direction][pic] = ImageLoader.loadImage(path);
 			}			
 	}
 	

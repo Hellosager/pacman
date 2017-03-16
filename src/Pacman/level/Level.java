@@ -33,7 +33,7 @@ public class Level {
 	private Ghost[] ghosts = {	new Blinky(Assets.blinky, this),
 								new Pinky(Assets.pinky, this),
 								new Inky(Assets.inky, this)};
-	private Player player = new Player(Assets.pacmanDircetions[Creature.RIGHT][0], this);
+	private Player player = new Player(Assets.pacmanDirections[Creature.RIGHT][0], this);
 	private int[][] tileMap;
 	private Point[] allWayTiles;
 	private String levelName;

@@ -74,7 +74,7 @@ public class EditorToolInput implements ActionListener, KeyListener{
 				JOptionPane.setDefaultLocale(Locale.ENGLISH);	// Antworten auf Englisch
 				int answer = JOptionPane.showConfirmDialog(editor.getDisplay().getFrame(),	// frame
 						"Changes has not been saved yet. Do you want to continue?",		// message
-						"Warning!", JOptionPane.YES_NO_OPTION, 0, new ImageIcon(Assets.pacmanDircetions[Creature.RIGHT][0]));	// title, Optionen, Keine Ahnung, Image
+						"Warning!", JOptionPane.YES_NO_OPTION, 0, new ImageIcon(Assets.pacmanDirections[Creature.RIGHT][0]));	// title, Optionen, Keine Ahnung, Image
 				switch(answer){
 				case 0:	
 					editor.setRunning(false);

@@ -31,6 +31,7 @@ public class Highscore {
 	private JLabel[] scoreLabels;
 	private final static DecimalFormat scoreFormat = new DecimalFormat("00000");
 	private int[] scores;
+	private AnimationThread at;
 	
 	public Highscore(Display display) {
 		this.frame = display.getFrame();
@@ -108,23 +109,35 @@ public class Highscore {
 			public void mouseExited(MouseEvent e) { menu.setBackground(Color.GRAY);}
 			public void mouseEntered(MouseEvent e) { menu.setBackground(mouseOver);}
 			public void mouseClicked(MouseEvent e) {
+				at.setRunning(false);
 				new MainMenu(display);
 			}
 		});		
 
-		JPanel buttonPanel = new JPanel(new GridLayout(2, 3));
+		JPanel buttonAnimationPanel = new JPanel(new GridLayout(2,1));
+		buttonAnimationPanel.setOpaque(false);
+		
+		AnimationPanel animationPanel = new AnimationPanel();
+		animationPanel.setBackground(Color.BLACK);
+		
+		JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
 		buttonPanel.setOpaque(false);
 		buttonPanel.setBackground(Color.BLACK);
-		for(int i = 0; i < 6; i++){
-			if(i == 4){
+		for(int i = 0; i < 3; i++){
+			if(i == 1){
 				buttonPanel.add(menu);
 			}else{
 				buttonPanel.add(new JLabel());
 			}
 		}
-		frame.add(buttonPanel);	// 3
+		buttonAnimationPanel.add(animationPanel);
+		buttonAnimationPanel.add(buttonPanel);
+		frame.add(buttonAnimationPanel);	// 3
 		frame.repaint();
 		frame.revalidate();
+		animationPanel.init();
+		at = new AnimationThread(animationPanel);
+		at.start();
 	}
 	
 	public void initScores(){

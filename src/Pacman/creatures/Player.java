@@ -18,7 +18,7 @@ public class Player extends Creature{
 
 	public void resetState(){
 		state = 0;
-		texture = Assets.pacmanDircetions[direction][Math.abs(state)];
+		texture = Assets.pacmanDirections[direction][Math.abs(state)];
 	}
 	
 	@Override
@@ -28,14 +28,14 @@ public class Player extends Creature{
 			direction = newDirection;
 		}
 		
-		texture = Assets.pacmanDircetions[direction][Math.abs(state)];
+		texture = Assets.pacmanDirections[direction][Math.abs(state)];
 		
 		// kann mi Math.abs geregelt werden siehe eins oben, state soll nur alle paar frames geregelt werden 
 		if(tickCount == MAX_TICK_COUNT){
-			if(state < Assets.pacmanDircetions[direction].length-1)
+			if(state < Assets.pacmanDirections[direction].length-1)
 				state++;
 			else
-				state = -(Assets.pacmanDircetions[direction].length-1);
+				state = -(Assets.pacmanDirections[direction].length-1);
 		tickCount = 0;
 		}else{
 			tickCount++;

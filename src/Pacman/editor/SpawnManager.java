@@ -43,7 +43,7 @@ public class SpawnManager {
 		spawns.add(new JLabel("       Y"));
 		
 		// TODO refactor dat shit
-		spawns.add(new JLabel(new ImageIcon(Assets.pacmanDircetions[Creature.RIGHT][0])));
+		spawns.add(new JLabel(new ImageIcon(Assets.pacmanDirections[Creature.RIGHT][0])));
 		playerX = new JTextField();
 
 		playerX.addFocusListener(new FocusListener() {
