@@ -29,8 +29,6 @@ public class Display {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Assets.initAssets();
-		frame.setVisible(true);
-		
 		
 		new MainMenu(this);
 

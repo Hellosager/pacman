@@ -3,6 +3,7 @@ package Pacman.gui;
 import java.awt.Color;
 
 import Pacman.gfx.Assets;
+import Pacman.stats.Stats;
 
 public class MainMenu {
 	
@@ -11,6 +12,7 @@ public class MainMenu {
 	
 	private MenuLabel titlePic;
 	private MenuButton play, score, editor;
+	private Stats stats = new Stats();
 	
 	public MainMenu(Display display){
 		this.display = display;
@@ -19,6 +21,7 @@ public class MainMenu {
 		this.componentDistance = display.getComponentDistance();
 
 		initMenu();
+		display.getFrame().setVisible(true);
 	}
 
 	private void initMenu(){

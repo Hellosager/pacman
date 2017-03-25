@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ import Pacman.Utils;
 import Pacman.game.Game;
 import Pacman.gui.Display;
 import Pacman.gui.MainMenu;
+import Pacman.stats.StatsView;
 
 public class Highscore {
 	private JFrame frame;
@@ -99,20 +101,37 @@ public class Highscore {
 		frame.add(scoresPanel);	// 2
 		
 		JLabel menu = new JLabel("Menü", JLabel.CENTER);
+		menu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
 		menu.setBackground(Color.GRAY);
 		menu.setFont(scoresFont);
 		menu.setOpaque(true);
 		Color mouseOver = new Color(142, 78, 163);
 		menu.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {}
-			public void mousePressed(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) { menu.setBackground(Color.GRAY);}
-			public void mouseEntered(MouseEvent e) { menu.setBackground(mouseOver);}
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				at.setRunning(false);
 				new MainMenu(display);
 			}
-		});		
+			public void mouseExited(MouseEvent e) { menu.setBackground(Color.GRAY);}
+			public void mouseEntered(MouseEvent e) { menu.setBackground(mouseOver);}
+			public void mouseClicked(MouseEvent e) {}
+		});
+		
+		JLabel stats = new JLabel("Stats", JLabel.CENTER);
+		stats.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
+		stats.setBackground(Color.GRAY);
+		stats.setFont(scoresFont);
+		stats.setOpaque(true);
+		stats.addMouseListener(new MouseListener() {
+			public void mouseReleased(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {
+				at.setRunning(false);
+				new StatsView(display);
+			}
+			public void mouseExited(MouseEvent e) {stats.setBackground(Color.GRAY);}
+			public void mouseEntered(MouseEvent e) {stats.setBackground(mouseOver);}
+			public void mouseClicked(MouseEvent e) {}
+		});
 
 		JPanel buttonAnimationPanel = new JPanel(new GridLayout(2,1));
 		buttonAnimationPanel.setOpaque(false);
@@ -124,8 +143,10 @@ public class Highscore {
 		buttonPanel.setOpaque(false);
 		buttonPanel.setBackground(Color.BLACK);
 		for(int i = 0; i < 3; i++){
-			if(i == 1){
+			if(i == 0){
 				buttonPanel.add(menu);
+			}else if(i == 2){
+				buttonPanel.add(stats);
 			}else{
 				buttonPanel.add(new JLabel());
 			}

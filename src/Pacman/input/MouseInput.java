@@ -28,20 +28,6 @@ public class MouseInput implements MouseListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON1)
-			switch(button.getName()){
-			case "play": 
-				new Levelselect(display);
-				break;
-			case "score":
-				new Highscore(display);
-				break;
-			case "editor": 
-				new Editor(display).start();
-				break;
-			}
-			
-			
 	}
 
 	@Override
@@ -56,6 +42,18 @@ public class MouseInput implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		if(e.getButton() == MouseEvent.BUTTON1)
+			switch(button.getName()){
+			case "play": 
+				new Levelselect(display);
+				break;
+			case "score":
+				new Highscore(display);
+				break;
+			case "editor": 
+				new Editor(display).start();
+				break;
+			}
 	}
 
 	@Override
