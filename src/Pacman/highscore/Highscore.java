@@ -100,7 +100,7 @@ public class Highscore {
 		scoreLabels[2].setFont(scoresFont);
 		frame.add(scoresPanel); // 2
 
-		JLabel menu = new JLabel("Menü", JLabel.CENTER);
+		JLabel menu = new JLabel("Menu", JLabel.CENTER);
 		menu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
 		menu.setBackground(Color.GRAY);
 		menu.setFont(scoresFont);
@@ -206,7 +206,7 @@ public class Highscore {
 
 	private void saveScore() {
 		sortScore();
-		File scoreFile = new File("score.txt");
+		File scoreFile = new File("Files/score.txt");
 		try {
 			BufferedWriter out;
 			scoreFile.createNewFile();
@@ -223,7 +223,7 @@ public class Highscore {
 	}
 
 	private void loadScore() {
-		File scoreFile = new File("score.txt");
+		File scoreFile = new File("Files/score.txt");
 		if (scoreFile.exists()) {
 			try {
 				BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(scoreFile)));

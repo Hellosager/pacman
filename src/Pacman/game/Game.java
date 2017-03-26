@@ -13,6 +13,8 @@ import Pacman.creatures.Ghost;
 import Pacman.creatures.Player;
 import Pacman.gui.Display;
 import Pacman.level.Level;
+import Pacman.stats.StatNames;
+import Pacman.stats.Stats;
 import Pacman.steuerung.Steuerung;
 import Pacman.tiles.Tile;
 
@@ -38,11 +40,15 @@ public class Game implements Runnable {
 	private Player player;
 	private Date modeTime;
 	private int score, lifeCount; // score und anzahl der verbleibenden leben
+	private Stats stats;
+	private Long playedTime = 0L;
+	private Date playedTimeStart;
 
 	public Game(Display display, int levelIndex, ArrayList<String> allLevel) {
 		this.display = display;
 		this.levelIndex = levelIndex;
 		this.allLevel = allLevel;
+		this.stats = display.getStats();
 		gi = new GameInformationPanel();
 		lifeCount = 3;
 		score = 0;
@@ -56,7 +62,8 @@ public class Game implements Runnable {
 
 			while (levelIsPlayed) {
 				renderCountdown();
-	
+				playedTimeStart = new Date();
+				
 				while (running) {
 					Date start = new Date(); // Messung
 					if (modeTime == null)
@@ -81,6 +88,10 @@ public class Game implements Runnable {
 					} catch (InterruptedException e) {
 					}
 				}
+				Date playedTimeEnd = new Date();
+				playedTime += (playedTimeEnd.getTime()-playedTimeStart.getTime());
+				
+				
 				if(levelIsPlayed)
 					onLifeLost();
 			}
@@ -132,6 +143,12 @@ public class Game implements Runnable {
 	}
 
 	public synchronized void stop() {
+		if(playedTimeStart != null){
+			Date playedTimeEnd = new Date();
+			playedTime += (playedTimeEnd.getTime() - playedTimeStart.getTime());
+			stats.add(StatNames.PLAYED_TIME, playedTime);
+			
+		}
 		if(playing)
 			playing = false;
 		if (levelIsPlayed == true) {
@@ -141,8 +158,7 @@ public class Game implements Runnable {
 			return;
 		try {
 			new Thread(this).join();
-		} catch (InterruptedException e) {
-		}
+		} catch (InterruptedException e) {}
 	}
 
 	public void tick() {
@@ -239,6 +255,7 @@ public class Game implements Runnable {
 	public void setLevel(Level level) {
 		this.level = level;
 		this.player = level.getPlayer();
+		this.level.setStats(stats);
 	}
 
 	public Level getLevel() {
@@ -269,6 +286,7 @@ public class Game implements Runnable {
 		if (lifeCount != 0)
 			gi.getLifes()[lifeCount - 1].setIcon(null);
 		lifeCount--;
+		stats.add(StatNames.DEATHS, new Long(1));
 	}
 
 	public boolean isRunning() {
@@ -294,16 +312,20 @@ public class Game implements Runnable {
 	}
 	
 	private void levelOver(){
+		stats.add(StatNames.PLAYED_TIME, playedTime);
 		if(lifeCount == -1){
 			score += level.getLevelScore();
 			new GameOverThread(this, level).run();
 		}else{
 			score += level.getLevelScore();
+			stats.add(StatNames.LEVEL_FINISHED, new Long(1));
 			do{
 				if(++levelIndex == allLevel.size())
 					levelIndex = 0;
-				level = new Level(allLevel.get(levelIndex));				
+				level = new Level(allLevel.get(levelIndex));
+				level.setStats(stats);
 			}while(!level.isValidToPlay());
+			try {Thread.sleep(1000);} catch (InterruptedException e) {}
 			start();
 		}	
 	}

@@ -22,6 +22,8 @@ import Pacman.creatures.Pinky;
 import Pacman.creatures.Player;
 import Pacman.gfx.Assets;
 import Pacman.level.pathfinder.Dijkstra;
+import Pacman.stats.StatNames;
+import Pacman.stats.Stats;
 import Pacman.tiles.Tile;
 
 public class Level {
@@ -39,6 +41,7 @@ public class Level {
 	private String levelName;
 	private boolean showDestinations = false;
 	private int levelScore = 0;
+	private Stats stats;
 	
 	
 	
@@ -61,6 +64,7 @@ public class Level {
 	}
 	
 	public void loadLevel(String path){
+//		System.out.println(path);
 		String file = Utils.loadFileAsString(path);
 		String[] tokens = file.split("\\s+");
 		
@@ -87,12 +91,12 @@ public class Level {
 	
 	// LEVEL SPEICHERN
 	public void saveLevel(String levelName){
-		File dir = new File(DIR_NAME);
+		File dir = new File("Files/" + DIR_NAME);
 		if(!dir.exists())
 			dir.mkdir();
 //		if(!levelFile.exists())
 			try {
-				File levelFile = new File(DIR_NAME + "/" + levelName + ".txt");
+				File levelFile = new File("Files/" + DIR_NAME + "/" + levelName + ".txt");
 				levelFile.createNewFile();
 				BufferedWriter writer = new BufferedWriter(new FileWriter(levelFile));
 				writer.write(width + " " + height + "\n");
@@ -154,6 +158,7 @@ public class Level {
 			tileMap[x][y] = Tile.EMPTY_WAY;
 			updateDestinations();
 			levelScore++;
+			stats.add(StatNames.EATEN_TILES, new Long(1));
 		}
 	}
 	
@@ -166,7 +171,7 @@ public class Level {
 	}
 	
 	public boolean exists(){
-		File levelFile = new File(DIR_NAME + "/" + levelName + ".txt");
+		File levelFile = new File("Files/" + DIR_NAME + "/" + levelName + ".txt");
 		return levelFile.exists();
 	}
 	
@@ -279,6 +284,8 @@ public class Level {
 	
 	public void changeShowDestinations(){
 		showDestinations = !showDestinations;
+		if(showDestinations == true)
+			stats.add(StatNames.CHEAT_GHOSTPATH, new Long(1));
 		updateDestinations();
 	}
 	private void updateDestinations(){
@@ -319,5 +326,9 @@ public class Level {
 			g.setCurrentMode(Ghost.MODE_SPREAD);
 			g.updateFields();
 		}
+	}
+	
+	public void setStats(Stats stats){
+		this.stats = stats;
 	}
 }

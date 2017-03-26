@@ -52,11 +52,11 @@ public class EditorToolInput implements ActionListener, KeyListener{
 			// FUNKTIONIERT IN JAR-DATEI +++
 			FileDialog fd = new FileDialog(editor.getDisplay().getFrame(), "Load Level", FileDialog.LOAD);
 			fd.setFile("*.txt");
-			fd.setDirectory("Level/");
+			fd.setDirectory("Files/Level/");
 			fd.setVisible(true);
 			String path = fd.getFile();
 			if(path != null){
-				path = "Level/" + path;
+				path = "Files/Level/" + path;
 				editor.getEditMap().loadLevel(path);
 				editor.setTileMap(editor.getEditMap().getTileMap());
 				editor.setSaved(true);

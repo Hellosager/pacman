@@ -58,10 +58,10 @@ public class Utils {
 	public static ArrayList<String> getAllLevel(){
 		ArrayList<String> fileNamesList = getPrimaryLevel();
 		
-		File f = new File("Level");
+		File f = new File("Files/Level/");
 		if(f.exists()){
 			for(int i = 0; i < f.listFiles().length; i++)
-				fileNamesList.add("Level/" + f.listFiles()[i].getName());
+				fileNamesList.add("Files/Level/" + f.listFiles()[i].getName());
 		}
 		
 		return fileNamesList;
@@ -70,7 +70,9 @@ public class Utils {
 	
 	public static void createReadme(){
 		try{
-			File readMe = new File("readme.txt");
+			if(!new File("Files").exists())
+				new File("Files").mkdir();
+			File readMe = new File("Files/readme.txt");
 			if(!readMe.exists()){
 				InputStream is = Utils.class.getClassLoader().getResourceAsStream("readme.txt");
 				BufferedReader br = new BufferedReader(new InputStreamReader(is));

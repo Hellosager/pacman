@@ -60,7 +60,7 @@ public class Levelselect {
 				levelSelector.addItem("Level " + (i+1));
 			else{
 				String s = fileNames.get(i);
-				levelSelector.addItem("Custom Level: " + s.substring(0, s.lastIndexOf(".")));
+				levelSelector.addItem("Custom Level: " + s.substring(s.lastIndexOf("/")+1, s.lastIndexOf(".")));
 			}
 		}
 		
