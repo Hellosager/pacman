@@ -12,7 +12,6 @@ public class MainMenu {
 	
 	private MenuLabel titlePic;
 	private MenuButton play, score, editor;
-	private Stats stats = new Stats();
 	
 	public MainMenu(Display display){
 		this.display = display;

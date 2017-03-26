@@ -1,11 +1,14 @@
 package Pacman.gui;
 
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
 import Pacman.gfx.Assets;
-import Pacman.input.MouseInput;
+import Pacman.stats.StatNames;
+import Pacman.stats.Stats;
 
 public class Display {
 	
@@ -15,6 +18,8 @@ public class Display {
 	private static final Dimension GAME_DIM = new Dimension(GAME_WIDTH, GAME_HEIGHT);
 	
 	private JFrame frame;
+	private Stats stats = new Stats();
+
 
 
 	public Display(String title) {		
@@ -28,6 +33,13 @@ public class Display {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent we){
+				stats.saveStats();
+				System.exit(0);
+			}
+		});
 		Assets.initAssets();
 		
 		new MainMenu(this);
@@ -50,5 +62,8 @@ public class Display {
 		return COMPONENT_DISTANCE;
 	}
 	
+	public Stats getStats(){
+		return stats;
+	}
 	
 }
